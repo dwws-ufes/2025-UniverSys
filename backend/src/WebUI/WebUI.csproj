@@ -1,0 +1,105 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>UniverSys.WebUI</RootNamespace>
+    <AssemblyName>UniverSys.WebUI</AssemblyName>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>true</IsPackable>
+    <!--<IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>-->
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <UserSecretsId>e95b2f35-f873-4796-bc94-9c9f73ae98a0</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="8.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="8.0.7" />
+	<PackageReference Include="Magma.Extensions.Application" Version="8.0.0" />
+	<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.6.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="14.1.0" />
+    <PackageReference Include="NSwag.MSBuild" Version="14.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="log\**" />
+    <Compile Remove="Templates\**" />
+    <Compile Remove="wwwroot\templates\**" />
+    <Content Remove="$(SpaRoot)**" />
+    <Content Remove="log\**" />
+    <Content Remove="Templates\**" />
+    <Content Remove="wwwroot\templates\**" />
+    <EmbeddedResource Remove="log\**" />
+    <EmbeddedResource Remove="Templates\**" />
+    <EmbeddedResource Remove="wwwroot\templates\**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Remove="log\**" />
+    <None Remove="Templates\**" />
+    <None Remove="wwwroot\templates\**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="web-api-client.ts">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+    <ItemGroup>
+	    <None Update="ParticipantesSTR.csv">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    </None>
+    </ItemGroup>
+
+
+	<PropertyGroup>
+		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+	</PropertyGroup>
+
+	<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' And '$(SkipNSwag)' != 'True' ">
+		<Exec ConsoleToMSBuild="true" ContinueOnError="true" WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration)">
+			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+		</Exec>
+		<Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
+		<Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
+	</Target>
+
+</Project>

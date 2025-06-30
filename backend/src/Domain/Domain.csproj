@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>UniverSys.Domain</RootNamespace>
+    <AssemblyName>UniverSys.Domain</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Diagrams\**" />
+    <Compile Remove="Events\**" />
+    <EmbeddedResource Remove="Diagrams\**" />
+    <EmbeddedResource Remove="Events\**" />
+    <None Remove="Diagrams\**" />
+    <None Remove="Events\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="stateless" Version="5.13.0" />
+  </ItemGroup>
+
+</Project>

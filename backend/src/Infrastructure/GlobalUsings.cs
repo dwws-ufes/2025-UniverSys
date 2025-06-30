@@ -1,0 +1,11 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using UniverSys.Application.Common.Interfaces;
+global using UniverSys.Domain.Enums;
+global using UniverSys.Domain.Entities;

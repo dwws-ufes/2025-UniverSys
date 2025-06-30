@@ -1,0 +1,65 @@
+<div class="bg-white pb-6 rounded-b-lg">
+  <magma-shared-title></magma-shared-title>
+</div>
+
+<magma-shared-subtitle [title]="usuarioId ? usuario?.nome ?? 'Editar' : 'Novo'"></magma-shared-subtitle>
+
+<section class="bg-white rounded-md mt-2">
+  <nz-tabset>
+    <nz-tab nzTitle="Dados Gerais">
+      <form nz-form [formGroup]="form" nzLayout="vertical" (ngSubmit)="salvar()" class="mt-2">
+        <div class="px-4 py-3">
+          <div nz-row nzGutter="24">
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12" nzXl="12" nzXl="12">
+              <nz-form-item>
+                <nz-form-label nzRequired>Login</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="login" placeholder="Login" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12">
+              <nz-form-item>
+                <nz-form-label nzRequired>Nome</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="nome" placeholder="Nome" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12">
+              <nz-form-item>
+                <nz-form-label nzRequired>E-mail</nz-form-label>
+                <nz-form-control>
+                  <input type="email" nz-input formControlName="email" placeholder="E-mail" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col nzXs="24" nzSm="12">
+              <nz-form-item>
+                <nz-form-label nzRequired> Tipo de Usuário </nz-form-label>
+                <nz-form-control>
+                  <nz-select formControlName="tipoUsuario" nzPlaceHolder="Tipo de Usuário">
+                    <nz-option [nzValue]="TipoUsuario.Profissional" nzLabel="Profissional">
+                    </nz-option>
+                    <nz-option [nzValue]="TipoUsuario.Secretaria" nzLabel="Secretária">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+          </div>
+        </div>
+          <div class="flex justify-end px-4 py-4 space-x-2 bg-blue-50 rounded-b-lg border-t">
+            <button type="submit" nz-button nzType="primary" [nzLoading]="salvandoUsuario">
+              {{ usuarioId ? 'Salvar' : 'Cadastrar' }}
+            </button>
+          </div>
+      </form>
+    </nz-tab>
+
+
+  </nz-tabset>
+</section>

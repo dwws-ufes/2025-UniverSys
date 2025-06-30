@@ -1,0 +1,6 @@
+﻿namespace #cabecalhoNamespace#.Application.Requests.#namespace#.Models;
+
+public class #entidade#Vm
+{
+#propriedades#
+}

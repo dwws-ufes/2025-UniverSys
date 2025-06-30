@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('./assets/lib/hljs/styles/atom-one-light.css');
+@import url('../node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css');
+@import url('../node_modules/@fortawesome/fontawesome-free/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import './assets/scss/app.scss';
+
+// PREVENIR BARRA DE ROLAGEM EMPURRAR O CONTEÚDO
+// Inclui o overflow-x para uma correção temporária
+
+body {
+  overflow-x: hidden;
+}
+
+@media print {
+  html,
+  body {
+    height: auto;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .permitir-impressao,
+  .permitir-impressao * {
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.nz-modal-content-scrollable {
+  .ant-modal-body {
+    overflow-y: auto;
+    max-height: 30em;
+  }
+  .ant-modal-confirm-content {
+    overflow-y: auto;
+    max-height: 20em;
+  }
+}
+
+.nz-modal-hide-body {
+  .ant-modal-body {
+    display: none;
+  }
+}
+
+.modal-checkbox {
+  .ant-modal-body {
+    nz-checkbox-group {
+      .ant-checkbox-group-item {
+        display: block;
+        margin-top: 15px;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+nz-collapse.custom-collapse-list {
+  background: #fff;
+  border: 0;
+  nz-collapse-panel {
+    margin-bottom: 1rem;
+    background-color: #fafafa;
+    border: 1px solid #edf2f9;
+    border-radius: 4px !important;
+  }
+}
+
+nz-card.card-body-sm-pt {
+  > .ant-card-body {
+    padding-top: 0.3rem !important;
+  }
+}
+
+nz-collapse-panel.collapse-panel-content-sm-pt {
+  .ant-collapse-content-box {
+    padding-top: 0.3rem !important;
+  }
+}
+
+nz-descriptions.descriptions-items-sm-pb {
+  .ant-descriptions-item {
+    padding-bottom: 8px !important;
+  }
+}
+
+.ant-checkbox .ant-checkbox-inner {
+  border-color: #2563EB;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  border-color: $checkbox-theme-color;
+}
+
+/* Sobrescrever o estilo de foco do NgZorro */
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: #2563EB !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
+}
+
+input:focus {
+  outline: none;
+}
+
+[type='text']:focus,
+input:focus:not([type]),
+input[type='email']:focus,
+input[type='number']:focus,
+input[type='date']:focus,
+input[type='datetime-local']:focus,
+input[type='month']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='time']:focus,
+input[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+  --tw-ring-color: transparent;
+}
+
+// Definir o autofill para a cor da marca
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #eff6ff inset !important;
+  box-shadow: 0 0 0px 1000px #eff6ff inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+// Definir o checkbox com a cor da marca
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #2563EB !important;
+  border-color: #2563EB !important;
+}
+
+.anticon svg {
+  vertical-align: baseline;
+}
+
+.ant-result-info .ant-result-icon > .anticon {
+  color: $brand-primary;
+}

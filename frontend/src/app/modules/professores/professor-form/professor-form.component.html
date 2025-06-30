@@ -1,0 +1,70 @@
+<div class="bg-white pb-6 rounded-b-lg">
+  <magma-shared-title></magma-shared-title>
+</div>
+
+<section class="bg-white rounded-md mt-2">
+  <nz-tabset>
+    <nz-tab nzTitle="Dados Gerais">
+      <form nz-form [formGroup]="form" nzLayout="vertical" (ngSubmit)="salvar()" class="mt-2">
+        <div class="px-4 py-3">
+          <div nz-row nzGutter="24">
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+              <nz-form-item>
+                <nz-form-label nzRequired>Nome</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="nome" placeholder="Nome do professor" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+              <nz-form-item>
+                <nz-form-label nzRequired>CPF</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="cpf" placeholder="CPF" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row nzGutter="24">
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+              <nz-form-item>
+                <nz-form-label nzRequired>Departamento</nz-form-label>
+                <nz-form-control>
+                  <nz-select formControlName="departamentoId" nzPlaceHolder="Selecione um departamento" nzShowSearch [nzLoading]="carregandoDepartamentos">
+                    <nz-option *ngFor="let departamento of departamentos" [nzValue]="departamento.id" [nzLabel]="departamento.nome"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+              <nz-form-item>
+                <nz-form-label nzRequired>Especialização</nz-form-label>
+                <nz-form-control>
+                  <nz-select formControlName="especializacao" nzPlaceHolder="Selecione uma especialização" [nzLoading]="carregandoEspecializacoes">
+                    <nz-option *ngFor="let especializacao of especializacoes" [nzValue]="especializacao.id" [nzLabel]="especializacao.text"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end px-4 py-4 space-x-2 bg-blue-50 rounded-b-lg border-t">
+          <button type="submit" nz-button nzType="primary" [nzLoading]="salvandoProfessor">
+            {{ professorId ? 'Salvar' : 'Cadastrar' }}
+          </button>
+        </div>
+      </form>
+    </nz-tab>
+
+    @if(professorId) {
+      <nz-tab nzTitle="Turmas">
+        <div class="px-4 py-3">
+          <turma-listar [professorId]="professorId" [isTabelaRelacionada]="true"></turma-listar>
+        </div>
+      </nz-tab>
+    }
+  </nz-tabset>
+</section>

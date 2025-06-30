@@ -1,0 +1,2493 @@
+{
+  "x-generator": "NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "UniverSys API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/Alunos": {
+      "post": {
+        "tags": [
+          "Alunos"
+        ],
+        "operationId": "Alunos_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlunoSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Alunos/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Alunos"
+        ],
+        "operationId": "Alunos_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlunoObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Alunos/obter": {
+      "post": {
+        "tags": [
+          "Alunos"
+        ],
+        "operationId": "Alunos_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlunoObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfAlunoObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Alunos/{id}": {
+      "delete": {
+        "tags": [
+          "Alunos"
+        ],
+        "operationId": "Alunos_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Auth_Login",
+        "requestBody": {
+          "x-name": "user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginModelOutput"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/validar-token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Auth_ValidarToken",
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateTokenModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Avaliacoes": {
+      "post": {
+        "tags": [
+          "Avaliacoes"
+        ],
+        "operationId": "Avaliacoes_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AvaliacaoSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Avaliacoes/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Avaliacoes"
+        ],
+        "operationId": "Avaliacoes_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvaliacaoObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Avaliacoes/obter": {
+      "post": {
+        "tags": [
+          "Avaliacoes"
+        ],
+        "operationId": "Avaliacoes_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AvaliacaoObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfAvaliacaoObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Avaliacoes/{id}": {
+      "delete": {
+        "tags": [
+          "Avaliacoes"
+        ],
+        "operationId": "Avaliacoes_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cursos": {
+      "post": {
+        "tags": [
+          "Cursos"
+        ],
+        "operationId": "Cursos_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CursoSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cursos/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Cursos"
+        ],
+        "operationId": "Cursos_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CursoObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cursos/obter": {
+      "post": {
+        "tags": [
+          "Cursos"
+        ],
+        "operationId": "Cursos_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CursoObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfCursoObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Cursos/{id}": {
+      "delete": {
+        "tags": [
+          "Cursos"
+        ],
+        "operationId": "Cursos_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Departamentos": {
+      "post": {
+        "tags": [
+          "Departamentos"
+        ],
+        "operationId": "Departamentos_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartamentoSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Departamentos/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Departamentos"
+        ],
+        "operationId": "Departamentos_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartamentoObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Departamentos/obter": {
+      "post": {
+        "tags": [
+          "Departamentos"
+        ],
+        "operationId": "Departamentos_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartamentoObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfDepartamentoObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Departamentos/{id}": {
+      "delete": {
+        "tags": [
+          "Departamentos"
+        ],
+        "operationId": "Departamentos_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Disciplinas": {
+      "post": {
+        "tags": [
+          "Disciplinas"
+        ],
+        "operationId": "Disciplinas_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisciplinaSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Disciplinas/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Disciplinas"
+        ],
+        "operationId": "Disciplinas_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisciplinaObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Disciplinas/obter": {
+      "post": {
+        "tags": [
+          "Disciplinas"
+        ],
+        "operationId": "Disciplinas_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisciplinaObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfDisciplinaObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Disciplinas/{id}": {
+      "delete": {
+        "tags": [
+          "Disciplinas"
+        ],
+        "operationId": "Disciplinas_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professores": {
+      "post": {
+        "tags": [
+          "Professores"
+        ],
+        "operationId": "Professores_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfessorSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professores/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Professores"
+        ],
+        "operationId": "Professores_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessorObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professores/obter": {
+      "post": {
+        "tags": [
+          "Professores"
+        ],
+        "operationId": "Professores_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfessorObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfProfessorObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professores/{id}": {
+      "delete": {
+        "tags": [
+          "Professores"
+        ],
+        "operationId": "Professores_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Professores/especializacoes": {
+      "get": {
+        "tags": [
+          "Professores"
+        ],
+        "operationId": "Professores_ObterEspecializacoes",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SelectItemEnum"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Turmas": {
+      "post": {
+        "tags": [
+          "Turmas"
+        ],
+        "operationId": "Turmas_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TurmaSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Turmas/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Turmas"
+        ],
+        "operationId": "Turmas_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TurmaObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Turmas/obter": {
+      "post": {
+        "tags": [
+          "Turmas"
+        ],
+        "operationId": "Turmas_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TurmaObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfTurmaObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Turmas/{id}": {
+      "delete": {
+        "tags": [
+          "Turmas"
+        ],
+        "operationId": "Turmas_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuarios/{id}": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "operationId": "Usuarios_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuarios/obter": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "operationId": "Usuarios_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfUsuarioDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuarios": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "operationId": "Usuarios_Criar",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioCriarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "operationId": "Usuarios_Alterar",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioAlterarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuarios/tipos": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "operationId": "Usuarios_ObterTipos",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SelectItemEnum"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlunoSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "matricula": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cursoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AlunoObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matricula": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cursoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedListOfAlunoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AlunoObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AlunoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matricula": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cursoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AlunoObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "matricula": {
+                "type": "string",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              },
+              "cpf": {
+                "type": "string",
+                "nullable": true
+              },
+              "usuarioId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "cursoId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "QueryRequestBase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortField": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "string",
+            "nullable": true
+          },
+          "quickSearchTerm": {
+            "type": "string",
+            "nullable": true
+          },
+          "selectFields": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "LoginModelOutput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "LoginModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "clienteId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "ValidateTokenModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AvaliacaoSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "peso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AvaliacaoObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "peso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedListOfAvaliacaoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AvaliacaoObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AvaliacaoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "peso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AvaliacaoObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              },
+              "peso": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "turmaId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "CursoSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "duracaoSemestres": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CursoObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "duracaoSemestres": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedListOfCursoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CursoObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CursoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "duracaoSemestres": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CursoObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              },
+              "duracaoSemestres": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "DepartamentoSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DepartamentoObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaginatedListOfDepartamentoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DepartamentoObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DepartamentoObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DepartamentoObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "DisciplinaSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "cargaHoraria": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ementa": {
+            "type": "string",
+            "nullable": true
+          },
+          "cursoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DisciplinaObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "cargaHoraria": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ementa": {
+            "type": "string",
+            "nullable": true
+          },
+          "cursoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedListOfDisciplinaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DisciplinaObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DisciplinaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "cargaHoraria": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ementa": {
+            "type": "string",
+            "nullable": true
+          },
+          "cursoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DisciplinaObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              },
+              "codigo": {
+                "type": "string",
+                "nullable": true
+              },
+              "cargaHoraria": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "cursoId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "ProfessorSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "especializacao": {
+            "$ref": "#/components/schemas/Especializacao"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "departamentoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Especializacao": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Graduacao",
+          "Mestrado",
+          "Doutorado"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "ProfessorObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "especializacao": {
+            "$ref": "#/components/schemas/Especializacao"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "departamentoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedListOfProfessorObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ProfessorObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ProfessorObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "especializacao": {
+            "$ref": "#/components/schemas/Especializacao"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "departamentoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ProfessorObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              },
+              "cpf": {
+                "type": "string",
+                "nullable": true
+              },
+              "especializacao": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Especializacao"
+                  }
+                ]
+              },
+              "usuarioId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "departamentoId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "SelectItemEnum": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TurmaSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "disciplinaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "professorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestreAno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestrePeriodo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TurmaObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "disciplinaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "professorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestreAno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestrePeriodo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaginatedListOfTurmaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/TurmaObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TurmaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "disciplinaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "professorId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestreAno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestrePeriodo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TurmaObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "disciplinaId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "professorId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "semestreAno": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "semestrePeriodo": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "UsuarioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefone": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoUsuario"
+          },
+          "administrador": {
+            "type": "boolean"
+          },
+          "administradorString": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TipoUsuario": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Administrador",
+          "Professor",
+          "Aluno"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "PaginatedListOfUsuarioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/UsuarioDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UsuarioObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "login": {
+                "type": "string",
+                "nullable": true
+              },
+              "nome": {
+                "type": "string",
+                "nullable": true
+              },
+              "email": {
+                "type": "string",
+                "nullable": true
+              },
+              "telefone": {
+                "type": "string",
+                "nullable": true
+              },
+              "administrador": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "grupoId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "tipo": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TipoUsuario"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "UsuarioCriarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefone": {
+            "type": "string",
+            "nullable": true
+          },
+          "termoAceito": {
+            "type": "boolean"
+          },
+          "sellerId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "UsuarioAlterarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "description": "Type into the textbox: Bearer {your JWT token}.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ]
+}

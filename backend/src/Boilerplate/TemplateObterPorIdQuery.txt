@@ -1,0 +1,36 @@
+﻿namespace #cabecalhoNamespace#.Application.Requests.#namespace#.Queries;
+
+using #cabecalhoNamespace#.Application.Requests.#namespace#.Models;
+
+public class #entidade#ObterPorIdQuery : IRequest<#entidade#Vm>
+{
+    public int Id { get; set; }
+}
+
+public class #entidade#ObterPorIdQueryHandler : IRequestHandler<#entidade#ObterPorIdQuery, #entidade#Vm>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public #entidade#ObterPorIdQueryHandler(
+        IApplicationDbContext context,
+        IMapper mapper
+        )
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<#entidade#Vm> Handle(#entidade#ObterPorIdQuery request, CancellationToken cancellationToken)
+    {
+        var objeto = await _context.#nomeTabela#
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
+
+        if (objeto == null)
+            return null;            
+
+        var vm = _mapper.Map<#entidade#Vm>(objeto);
+
+        return vm;
+    }
+}

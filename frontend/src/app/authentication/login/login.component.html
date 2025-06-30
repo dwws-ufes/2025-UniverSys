@@ -1,0 +1,80 @@
+<logged-out-container>
+  <!-- TELA DE LOGIN -->
+  <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 -mt-12 mx-2 sm:mx-0">
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[540px]">
+      <div class="shadow sm:rounded-md">
+        <form nz-form [formGroup]="loginForm" nzLayout="vertical" (ngSubmit)="submitForm()">
+          <div class="bg-white px-12 pt-8 pb-6 border-t">
+
+            <div class="mb-6">
+              <h2 class="text-3xl font-semibold text-neutral-800">Entrar</h2>
+              <h4 class="-mt-2 text-sm text-neutral-500">Coloque suas credenciais</h4>
+            </div>
+            <nz-form-item>
+              <nz-form-label nzFor="userName">Login</nz-form-label>
+              <nz-form-control nzErrorTip="Informe o login">
+                <nz-input-group [nzPrefix]="prefixUser">
+                  <input type="text" nz-input formControlName="userName" #login placeholder="Login" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="relative" style="margin-bottom: 10px">
+              <nz-form-label class="password-label" nzFor="password">
+                <div class="font-semibold">Senha</div>
+              </nz-form-label>
+              <nz-form-control nzErrorTip="Informe a senha">
+                <nz-input-group [nzPrefix]="prefixLock" [nzSuffix]="suffixTemplate">
+                  <input
+                    [type]="passwordVisible ? 'text' : 'password'"
+                    nz-input
+                    formControlName="password"
+                    placeholder="Senha" />
+                </nz-input-group>
+                <ng-template #suffixTemplate>
+                  <i
+                    nz-icon
+                    [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                    (click)="passwordVisible = !passwordVisible"></i>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+            <!-- <div
+              [routerLink]="['/authentication/esqueci-minha-senha']"
+              class="flex justify-end font-normal cursor-pointer hover:text-magma transition-colors duration-300">
+              Esqueceu sua senha?
+            </div> -->
+          </div>
+          <div class="sm:flex items-center justify-end px-12 py-6 bg-blue-50 border-t rounded-b-lg">
+            <button
+              nz-button
+              [nzLoading]="autenticando"
+              class="sm:w-36 bg-magma w-full text-white mb-2 sm:mb-0 hover:bg-blue-800">
+              Entrar
+            </button>
+<!--            <div>
+              <button
+                routerLink="/authentication/cadastro-usuario"
+                nz-button
+                type="button"
+                nzType="text"
+                class="sm:w-36 w-full hover:bg-transparent hover:text-magma bg-white">
+                Criar uma conta
+              </button>
+            </div>-->
+          </div>
+        </form>
+        <ng-template #prefixUser>
+          <i nz-icon nzType="user"></i>
+        </ng-template>
+        <ng-template #prefixLock>
+          <i nz-icon nzType="lock"></i>
+        </ng-template>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container text-lg-center font-semibold flex justify-center">
+        UniverSys © Todos os direitos reservados
+      </div>
+    </footer>
+  </div>
+</logged-out-container>

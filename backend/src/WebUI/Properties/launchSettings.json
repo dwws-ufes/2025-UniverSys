@@ -1,0 +1,28 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:61846",
+      "sslPort": 44312
+    }
+  },
+  "profiles": {
+    "UniverSys.WebUI": {
+      "commandName": "Project",
+      "launchUrl": "/api",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

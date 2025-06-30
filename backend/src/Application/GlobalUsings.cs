@@ -1,0 +1,16 @@
+﻿global using AutoMapper;
+global using AutoMapper.QueryableExtensions;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Reflection;
+global using System.Threading;
+global using System.Threading.Tasks;
+global using UniverSys.Application.Common.Exceptions;
+global using UniverSys.Application.Common.Helpers;
+global using UniverSys.Application.Common.Interfaces;
+global using UniverSys.Application.Common.Models;
+global using UniverSys.Application.Common.Security;
+global using UniverSys.Domain.Entities;

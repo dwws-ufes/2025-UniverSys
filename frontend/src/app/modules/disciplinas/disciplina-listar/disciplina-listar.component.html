@@ -1,0 +1,38 @@
+@if(!isTabelaRelacionada()) {
+  <div class="bg-white pb-6 rounded-b-lg">
+    <magma-shared-title>
+        <button type="button" nz-button nzType="primary" [routerLink]="['/disciplinas', 'criar']">Incluir Disciplina</button>
+    </magma-shared-title>
+  </div>
+}
+
+<section class="mt-2">
+  <div class="mx-auto px-4 bg-white flex-col divide-y divide-gray-200 items-center rounded-lg">
+    <nz-table [nzData]="disciplinas.items" [nzLoading]="carregandoDisciplinas" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+              [nzTotal]="disciplinas.totalCount" (nzQueryParams)="onQueryParamsChange($event)">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Código</th>
+          <th>Carga Horária</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let disciplina of disciplinas.items">
+          <td>{{ disciplina.nome }}</td>
+          <td>{{ disciplina.codigo }}</td>
+          <td>{{ disciplina.cargaHoraria }}h</td>
+          <td>
+            <button nz-button nzType="default" nzSize="small" nzShape="circle" class="mr-2" (click)="editar(disciplina)">
+              <span nz-icon nzType="edit"></span>
+            </button>
+            <button nz-button nzType="default" nzDanger nzSize="small" nzShape="circle" (click)="excluir(disciplina)">
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</section>

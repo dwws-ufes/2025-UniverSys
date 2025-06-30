@@ -1,0 +1,34 @@
+﻿namespace #cabecalhoNamespace#.Application.Requests.#namespace#.Commands;
+
+public class #entidade#ExcluirCommand : IRequest<Unit>
+{
+    public int Id { get; set; }
+}
+
+public class #entidade#ExcluirCommandHandler : IRequestHandler<#entidade#ExcluirCommand, Unit>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public #entidade#ExcluirCommandHandler(IApplicationDbContext context,
+        IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<Unit> Handle(#entidade#ExcluirCommand request, CancellationToken cancellationToken)
+    {
+        var objeto = await _context.#nomeTabela#  
+            .FirstOrDefaultAsync(x => x.Id == request.Id);
+
+        if (objeto == null)
+            throw new ValidationException("NaoEncontrado", "Registro não encontrado");
+
+        objeto.DataExclusao = DateTime.Now;
+        _context.#nomeTabela#.Update(objeto);
+        await _context.SaveChangesAsync(cancellationToken);
+        return Unit.Value;
+    }
+}
+

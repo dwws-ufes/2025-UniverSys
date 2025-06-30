@@ -1,0 +1,33 @@
+﻿namespace #cabecalhoNamespace#.Application.Requests.#namespace#.Queries;
+
+using #cabecalhoNamespace#.Application.Requests.#namespace#.Models;
+
+public class #entidade#ObterQuery : QueryRequestBase, IRequest<PaginatedList<#entidade#Vm>>
+{
+
+}
+
+public class #entidade#ObterQueryHandler : IRequestHandler<#entidade#ObterQuery, PaginatedList<#entidade#Vm>>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public #entidade#ObterQueryHandler(
+        IApplicationDbContext context,
+        IMapper mapper
+        )
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<PaginatedList<#entidade#Vm>> Handle(#entidade#ObterQuery request, CancellationToken cancellationToken)
+    {
+        var consulta = _context.#nomeTabela#
+            .OrderBy(x => x.Id)
+            .ProjectTo<#entidade#Vm>(_mapper.ConfigurationProvider);
+
+
+        return await PaginatedList<#entidade#Vm>.CreateAsync(consulta, request.PageIndex, request.PageSize);
+    }
+}

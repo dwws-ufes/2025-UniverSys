@@ -1,0 +1,331 @@
+### ==================================================
+### TESTE DOS ENDPOINTS - UNIVERSYS
+### ==================================================
+
+@baseUrl = https://localhost:5001/api
+
+### ==================================================
+### DEPARTAMENTOS
+### ==================================================
+
+### Salvar Departamento (Criar)
+POST {{baseUrl}}/departamentos
+Content-Type: application/json
+
+{
+  "nome": "Departamento de Ciência da Computação"
+}
+
+### Salvar Departamento (Atualizar)
+POST {{baseUrl}}/departamentos
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Departamento de Tecnologia da Informação"
+}
+
+### Obter Departamento por ID
+GET {{baseUrl}}/departamentos/obter-por-id/1
+
+### Obter Departamentos (Listagem)
+POST {{baseUrl}}/departamentos/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10
+}
+
+### Excluir Departamento
+DELETE {{baseUrl}}/departamentos/1
+
+### ==================================================
+### CURSOS
+### ==================================================
+
+### Salvar Curso (Criar)
+POST {{baseUrl}}/cursos
+Content-Type: application/json
+
+{
+  "nome": "Ciência da Computação",
+  "duracaoSemestres": 8
+}
+
+### Salvar Curso (Atualizar)
+POST {{baseUrl}}/cursos
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Engenharia de Software",
+  "duracaoSemestres": 10
+}
+
+### Obter Curso por ID
+GET {{baseUrl}}/cursos/obter-por-id/1
+
+### Obter Cursos (Listagem)
+POST {{baseUrl}}/cursos/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "nome": "Ciência"
+}
+
+### Excluir Curso
+DELETE {{baseUrl}}/cursos/1
+
+### ==================================================
+### DISCIPLINAS
+### ==================================================
+
+### Salvar Disciplina (Criar)
+POST {{baseUrl}}/disciplinas
+Content-Type: application/json
+
+{
+  "nome": "Algoritmos e Estruturas de Dados",
+  "codigo": "AED001",
+  "cargaHoraria": 80,
+  "ementa": "Estudo de algoritmos fundamentais e estruturas de dados básicas",
+  "cursoId": 1
+}
+
+### Salvar Disciplina (Atualizar)
+POST {{baseUrl}}/disciplinas
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Estruturas de Dados Avançadas",
+  "codigo": "EDA001",
+  "cargaHoraria": 60,
+  "ementa": "Estudo de estruturas de dados avançadas e algoritmos complexos",
+  "cursoId": 1
+}
+
+### Obter Disciplina por ID
+GET {{baseUrl}}/disciplinas/obter-por-id/1
+
+### Obter Disciplinas (Listagem)
+POST {{baseUrl}}/disciplinas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "cursoId": 1
+}
+
+### Excluir Disciplina
+DELETE {{baseUrl}}/disciplinas/1
+
+### ==================================================
+### PROFESSORES
+### ==================================================
+
+### Salvar Professor (Criar)
+POST {{baseUrl}}/professores
+Content-Type: application/json
+
+{
+  "nome": "Dr. João Silva",
+  "cpf": "12345678901",
+  "especializacao": "Mestrado",
+  "usuarioId": 1,
+  "departamentoId": 1
+}
+
+### Salvar Professor (Atualizar)
+POST {{baseUrl}}/professores
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Dr. João Santos Silva",
+  "cpf": "12345678901",
+  "especializacao": "Doutorado",
+  "usuarioId": 1,
+  "departamentoId": 1
+}
+
+### Obter Professor por ID
+GET {{baseUrl}}/professores/obter-por-id/1
+
+### Obter Professores (Listagem)
+POST {{baseUrl}}/professores/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "departamentoId": 1
+}
+
+### Excluir Professor
+DELETE {{baseUrl}}/professores/1
+
+### ==================================================
+### TURMAS
+### ==================================================
+
+### Salvar Turma (Criar)
+POST {{baseUrl}}/turmas
+Content-Type: application/json
+
+{
+  "disciplinaId": 1,
+  "professorId": 1,
+  "semestreAno": 2024,
+  "semestrePeriodo": 1,
+  "nome": "AED001-T01"
+}
+
+### Salvar Turma (Atualizar)
+POST {{baseUrl}}/turmas
+Content-Type: application/json
+
+{
+  "id": 1,
+  "disciplinaId": 1,
+  "professorId": 1,
+  "semestreAno": 2024,
+  "semestrePeriodo": 2,
+  "nome": "AED001-T02"
+}
+
+### Obter Turma por ID
+GET {{baseUrl}}/turmas/obter-por-id/1
+
+### Obter Turmas (Listagem)
+POST {{baseUrl}}/turmas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "semestreAno": 2024,
+  "professorId": 1
+}
+
+### Excluir Turma
+DELETE {{baseUrl}}/turmas/1
+
+### ==================================================
+### ALUNOS
+### ==================================================
+
+### Salvar Aluno (Criar)
+POST {{baseUrl}}/alunos
+Content-Type: application/json
+
+{
+  "matricula": "2024001",
+  "nome": "Maria Silva Santos",
+  "cpf": "98765432109",
+  "usuarioId": 2,
+  "cursoId": 1
+}
+
+### Salvar Aluno (Atualizar)
+POST {{baseUrl}}/alunos
+Content-Type: application/json
+
+{
+  "id": 1,
+  "matricula": "2024001",
+  "nome": "Maria Silva Santos Oliveira",
+  "cpf": "98765432109",
+  "usuarioId": 2,
+  "cursoId": 1
+}
+
+### Obter Aluno por ID
+GET {{baseUrl}}/alunos/obter-por-id/1
+
+### Obter Alunos (Listagem)
+POST {{baseUrl}}/alunos/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "cursoId": 1,
+  "nome": "Maria"
+}
+
+### Excluir Aluno
+DELETE {{baseUrl}}/alunos/1
+
+### ==================================================
+### CENÁRIO DE TESTE COMPLETO
+### ==================================================
+
+### 1. Criar Departamento
+POST {{baseUrl}}/departamentos
+Content-Type: application/json
+
+{
+  "nome": "Departamento de Engenharia"
+}
+
+### 2. Criar Curso
+POST {{baseUrl}}/cursos
+Content-Type: application/json
+
+{
+  "nome": "Engenharia de Computação",
+  "duracaoSemestres": 10
+}
+
+### 3. Criar Disciplina
+POST {{baseUrl}}/disciplinas
+Content-Type: application/json
+
+{
+  "nome": "Programação Orientada a Objetos",
+  "codigo": "POO001",
+  "cargaHoraria": 80,
+  "ementa": "Conceitos de programação orientada a objetos",
+  "cursoId": 1
+}
+
+### 4. Criar Professor
+POST {{baseUrl}}/professores
+Content-Type: application/json
+
+{
+  "nome": "Prof. Ana Costa",
+  "cpf": "11122233344",
+  "especializacao": "Doutorado",
+  "usuarioId": 1,
+  "departamentoId": 1
+}
+
+### 5. Criar Turma
+POST {{baseUrl}}/turmas
+Content-Type: application/json
+
+{
+  "disciplinaId": 1,
+  "professorId": 1,
+  "semestreAno": 2024,
+  "semestrePeriodo": 1,
+  "nome": "POO001-2024.1"
+}
+
+### 6. Criar Aluno
+POST {{baseUrl}}/alunos
+Content-Type: application/json
+
+{
+  "matricula": "202400001",
+  "nome": "Pedro Henrique Silva",
+  "cpf": "55566677788",
+  "usuarioId": 2,
+  "cursoId": 1
+} 

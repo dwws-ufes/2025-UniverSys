@@ -1,0 +1,9 @@
+﻿namespace #cabecalhoNamespace#.Infrastructure.Persistence.Configurations;
+
+public class #entidade#Configuration : IEntityTypeConfiguration<#entidade#>
+{
+    public void Configure(EntityTypeBuilder<#entidade#> builder)
+    {
+               
+    }
+}

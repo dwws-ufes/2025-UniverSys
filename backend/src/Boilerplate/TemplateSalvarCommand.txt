@@ -1,0 +1,42 @@
+﻿namespace #cabecalhoNamespace#.Application.Requests.#namespace#.Commands;
+
+public class #entidade#SalvarCommand : IRequest<int>
+{
+   #propriedades#
+}
+
+public class #entidade#SalvarCommandHandler : IRequestHandler<#entidade#SalvarCommand, int>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public #entidade#SalvarCommandHandler(IApplicationDbContext context,
+        IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<int> Handle(#entidade#SalvarCommand request, CancellationToken cancellationToken)
+    {
+        #entidade# #entidade#;
+
+        if (request.Id.HasValue)
+        {
+            #entidade# = await _context.#nomeTabela#                
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
+            _mapper.Map(request, #entidade#);
+            _context.#nomeTabela#.Update(#entidade#);            
+        }
+        else
+        {
+            #entidade# = new #entidade#();
+            _mapper.Map(request, #entidade#);
+            await _context.#nomeTabela#.AddAsync(#entidade#);
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
+        return #entidade#.Id;
+    }    
+}
+

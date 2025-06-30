@@ -1,0 +1,40 @@
+$left-col-max-width: 470px;
+
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+
+  > .row {
+    height: 100%;
+    .left-col {
+      background: linear-gradient(180deg, #323285 39.58%, #886cff 100%);
+      @media (min-width: 992px) {
+        max-width: $left-col-max-width;
+      }
+
+      .bottom-wrapper {
+        display: none;
+        @media (min-height: 854px) {
+          display: block;
+        }
+        img {
+          position: absolute;
+          bottom: 20px;
+          max-width: 95%;
+          max-height: 280px;
+        }
+      }
+    }
+
+    .right-col {
+      @media (min-width: 992px) {
+        flex: 0 0 calc(100% - #{$left-col-max-width});
+        max-width: calc(100% - #{$left-col-max-width});
+      }
+    }
+  }
+}

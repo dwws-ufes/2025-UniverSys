@@ -1,0 +1,40 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using #cabecalhoNamespace#.Application.Requests.#namespace#.Commands;
+using #cabecalhoNamespace#.Application.Requests.#namespace#.Models;
+using #cabecalhoNamespace#.Application.Requests.#namespace#.Queries;
+
+namespace UnimedVx.AxPlus.WebUI.Controllers;
+
+[Authorize]
+public class #namespace#Controller : ApiControllerBase
+{
+    [HttpGet("{id}")]
+    public async Task<#entidade#Vm> ObterPorId(int id)
+    {
+        return await Mediator.Send(new #entidade#ObterPorIdQuery
+        {
+            Id = id
+        });
+    }    
+
+    [HttpPost("obter")]
+    public async Task<PaginatedList<#entidade#Vm>> Obter(#entidade#ObterQuery query)
+    {
+        return await Mediator.Send(query);
+    }
+
+    [HttpPost]
+    public async Task<int> Salvar(#entidade#SalvarCommand command)
+    {
+        return await Mediator.Send(command);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<Unit> Excluir(int id)
+    {
+        return await Mediator.Send(new #entidade#ExcluirCommand
+        {
+            Id = id
+        });
+    }
+}

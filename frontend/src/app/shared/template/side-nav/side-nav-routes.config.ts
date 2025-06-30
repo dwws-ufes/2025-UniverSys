@@ -1,0 +1,60 @@
+import { SideNavInterface } from '../../interfaces/side-nav.type';
+export const ROUTES: SideNavInterface[] = [
+  {
+    path: 'usuarios',
+    title: 'Usuários',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'user',
+    submenu: [],
+    permissions: [],
+  },
+  {
+    path: 'cursos',
+    title: 'Cursos',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'book',
+    submenu: [],
+  },
+  {
+    path: 'departamentos',
+    title: 'Departamentos',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'apartment',
+    submenu: [],
+  },
+  {
+    path: 'disciplinas',
+    title: 'Disciplinas',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'read',
+    submenu: [],
+  },
+  {
+    path: 'turmas',
+    title: 'Turmas',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'team',
+    submenu: [],
+  },
+  {
+    path: 'professores',
+    title: 'Professores',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'user-delete',
+    submenu: [],
+  },
+  {
+    path: 'alunos',
+    title: 'Alunos',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'usergroup-add',
+    submenu: [],
+  }
+];

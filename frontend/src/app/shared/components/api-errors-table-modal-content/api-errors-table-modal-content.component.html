@@ -1,0 +1,12 @@
+<div *nzModalTitle class="d-flex align-items-center">
+  <i nz-icon nzType="close-circle" nzTheme="outline" style="color: #ff4d4f; font-size: 20px; margin-right: 10px;"></i>
+  <span style="padding-top: 3px">{{ modalTitle }}</span>
+</div>
+
+<nz-table #table [nzData]="errors" nzSize="small" nzBordered [nzFrontPagination]="false" [nzShowPagination]="false">
+  <tbody>
+    <tr *ngFor="let e of table.data">
+      <td>{{ e }}</td>
+    </tr>
+  </tbody>
+</nz-table>
