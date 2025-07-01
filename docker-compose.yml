@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: universys-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: UniverSys
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+      start_period: 40s
+    networks:
+      - universys-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: universys-app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=server=database;user id=root;password=root;persist security info=True;database=UniverSys;port=3306
+      - UseInMemoryDatabase=false
+      - UrlWebApp=http://localhost:5000/#
+      - TokenSettings__SecurityKey=WJ%*zFG{?..Y92^ER^;mWY<QLciPg->k
+      - TokenSettings__ExpiringTimeInHours=100
+      - TokenSettings__RefreshTokenExpiringTimeInHours=2
+    ports:
+      - "5000:80"
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - universys-network
+
+volumes:
+  mysql_data:
+
+networks:
+  universys-network:
+    driver: bridge 

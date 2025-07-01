@@ -70,6 +70,13 @@ export class UsuarioListarComponent implements OnInit {
     this.router.navigate(['usuarios', 'editar', u.id]);
   }
 
+  excluir(usuario: UsuarioDto) {
+    this.usuariosClient.excluir(usuario.id!).subscribe(() => {
+      this.notification.success('Usuário excluído com sucesso!', '');
+      this.pesquisar();
+    });
+  }
+
   onQueryParamsChange(params: NzTableQueryParams): void {
     const {pageSize, pageIndex, sort} = params;
     let aux = sort.find(v => v.value != null);

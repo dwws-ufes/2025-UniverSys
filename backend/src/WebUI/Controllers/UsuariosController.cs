@@ -38,6 +38,17 @@ public class UsuariosController : ApiControllerBase
         return await Mediator.Send(command);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Excluir(int id)
+    {
+        await Mediator.Send(new UsuarioExcluirCommand
+        {
+            Id = id
+        });
+        
+        return NoContent();
+    }
+
     [HttpGet("tipos")]
     public List<SelectItemEnum> ObterTipos()
     {

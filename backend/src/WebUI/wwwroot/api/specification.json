@@ -1293,6 +1293,37 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Usuarios"
+        ],
+        "operationId": "Usuarios_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/Usuarios/obter": {
@@ -2134,6 +2165,10 @@
           "cursoId": {
             "type": "integer",
             "format": "int32"
+          },
+          "cursoNome": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -2301,19 +2336,19 @@
             "type": "string",
             "nullable": true
           },
-          "disciplinaNome": {
+          "turmaDisciplinaNome": {
             "type": "string",
             "nullable": true
           },
-          "professorNome": {
+          "turmaProfessorNome": {
             "type": "string",
             "nullable": true
           },
-          "semestreAno": {
+          "turmaSemestreAno": {
             "type": "integer",
             "format": "int32"
           },
-          "semestrePeriodo": {
+          "turmaSemestrePeriodo": {
             "type": "integer",
             "format": "int32"
           }
@@ -2629,6 +2664,10 @@
           "departamentoId": {
             "type": "integer",
             "format": "int32"
+          },
+          "departamentoNome": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -2798,9 +2837,17 @@
             "type": "integer",
             "format": "int32"
           },
+          "disciplinaNome": {
+            "type": "string",
+            "nullable": true
+          },
           "professorId": {
             "type": "integer",
             "format": "int32"
+          },
+          "professorNome": {
+            "type": "string",
+            "nullable": true
           },
           "semestreAno": {
             "type": "integer",

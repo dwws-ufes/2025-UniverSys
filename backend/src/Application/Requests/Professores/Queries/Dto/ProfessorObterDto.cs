@@ -10,4 +10,5 @@ public class ProfessorObterDto
     public Especializacao Especializacao { get; set; }
     public int? UsuarioId { get; set; }
     public int DepartamentoId { get; set; }
-} 
+    public string DepartamentoNome { get; set; }
+}

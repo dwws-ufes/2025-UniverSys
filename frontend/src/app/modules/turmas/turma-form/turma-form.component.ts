@@ -159,6 +159,11 @@ export class TurmaFormComponent implements OnInit {
             this.router.navigate(['turmas', 'editar', r]);
           }
         });
+    } else {
+      this.nzModalService.error({
+        nzTitle: 'Formulário Inválido',
+        nzContent: 'Verifique o formulário e preencha corretamente os campos obrigatórios!'
+      });
     }
   }
 
@@ -226,6 +231,11 @@ export class TurmaFormComponent implements OnInit {
           this.avaliacaoModalVisible = false;
           this.carregarAvaliacoes();
         });
+    } else {
+      this.nzModalService.error({
+        nzTitle: 'Formulário Inválido',
+        nzContent: 'Verifique o formulário e preencha corretamente os campos obrigatórios!'
+      });
     }
   }
 

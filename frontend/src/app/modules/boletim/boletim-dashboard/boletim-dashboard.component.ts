@@ -64,8 +64,10 @@ export class BoletimDashboardComponent implements OnInit {
     ).subscribe({
       next: (itens) => {
         this.boletimItens = itens
-        this.loading = false;
       }
+    })
+    .add(() => {
+      this.loading = false;
     });
   }
 

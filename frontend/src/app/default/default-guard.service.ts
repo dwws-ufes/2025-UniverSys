@@ -25,7 +25,7 @@ export class DefaultGuard {
       return;
     }
     if (this.authenticationService.isAluno()) {
-      this.router.navigateByUrl('/matriculas');
+      this.router.navigateByUrl('/boletim');
       return;
     }
     this.router.navigateByUrl('/turmas');

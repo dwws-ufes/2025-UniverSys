@@ -8,4 +8,5 @@ public class DisciplinaObterDto
     public int CargaHoraria { get; set; }
     public string Ementa { get; set; }
     public int CursoId { get; set; }
-} 
+    public string CursoNome { get; set; }
+}

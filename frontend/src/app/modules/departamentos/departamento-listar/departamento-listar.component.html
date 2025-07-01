@@ -21,7 +21,9 @@
             <button nz-button nzType="default" nzSize="small" nzShape="circle" class="mr-2" (click)="editar(departamento)">
               <span nz-icon nzType="edit"></span>
             </button>
-            <button nz-button nzType="default" nzDanger nzSize="small" nzShape="circle" (click)="excluir(departamento)">
+            <button nz-button nzType="default" nzDanger nzSize="small" nzShape="circle"
+                    nz-popconfirm nzPopconfirmTitle="Tem certeza que deseja excluir este departamento?"
+                    (nzOnConfirm)="excluir(departamento)">
               <span nz-icon nzType="delete"></span>
             </button>
           </td>

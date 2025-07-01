@@ -2285,6 +2285,7 @@ export class TurmasClient implements ITurmasClient {
 
 export interface IUsuariosClient {
     obterPorId(id: number): Observable<UsuarioDto>;
+    excluir(id: number): Observable<FileResponse>;
     obter(query: UsuarioObterQuery): Observable<PaginatedListOfUsuarioDto>;
     criar(command: UsuarioCriarCommand): Observable<UsuarioDto>;
     alterar(command: UsuarioAlterarCommand): Observable<UsuarioDto>;
@@ -2347,6 +2348,61 @@ export class UsuariosClient implements IUsuariosClient {
             result200 = UsuarioDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    excluir(id: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/Usuarios/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExcluir(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExcluir(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse>;
+        }));
+    }
+
+    protected processExcluir(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -3950,6 +4006,7 @@ export class DisciplinaObterDto implements IDisciplinaObterDto {
     cargaHoraria?: number;
     ementa?: string | undefined;
     cursoId?: number;
+    cursoNome?: string | undefined;
 
     constructor(data?: IDisciplinaObterDto) {
         if (data) {
@@ -3968,6 +4025,7 @@ export class DisciplinaObterDto implements IDisciplinaObterDto {
             this.cargaHoraria = _data["cargaHoraria"];
             this.ementa = _data["ementa"];
             this.cursoId = _data["cursoId"];
+            this.cursoNome = _data["cursoNome"];
         }
     }
 
@@ -3986,6 +4044,7 @@ export class DisciplinaObterDto implements IDisciplinaObterDto {
         data["cargaHoraria"] = this.cargaHoraria;
         data["ementa"] = this.ementa;
         data["cursoId"] = this.cursoId;
+        data["cursoNome"] = this.cursoNome;
         return data;
     }
 }
@@ -3997,6 +4056,7 @@ export interface IDisciplinaObterDto {
     cargaHoraria?: number;
     ementa?: string | undefined;
     cursoId?: number;
+    cursoNome?: string | undefined;
 }
 
 export class DisciplinaObterQuery extends QueryRequestBase implements IDisciplinaObterQuery {
@@ -4239,10 +4299,10 @@ export class MatriculaObterDto implements IMatriculaObterDto {
     alunoMatricula?: string | undefined;
     turmaId?: number;
     turmaNome?: string | undefined;
-    disciplinaNome?: string | undefined;
-    professorNome?: string | undefined;
-    semestreAno?: number;
-    semestrePeriodo?: number;
+    turmaDisciplinaNome?: string | undefined;
+    turmaProfessorNome?: string | undefined;
+    turmaSemestreAno?: number;
+    turmaSemestrePeriodo?: number;
 
     constructor(data?: IMatriculaObterDto) {
         if (data) {
@@ -4261,10 +4321,10 @@ export class MatriculaObterDto implements IMatriculaObterDto {
             this.alunoMatricula = _data["alunoMatricula"];
             this.turmaId = _data["turmaId"];
             this.turmaNome = _data["turmaNome"];
-            this.disciplinaNome = _data["disciplinaNome"];
-            this.professorNome = _data["professorNome"];
-            this.semestreAno = _data["semestreAno"];
-            this.semestrePeriodo = _data["semestrePeriodo"];
+            this.turmaDisciplinaNome = _data["turmaDisciplinaNome"];
+            this.turmaProfessorNome = _data["turmaProfessorNome"];
+            this.turmaSemestreAno = _data["turmaSemestreAno"];
+            this.turmaSemestrePeriodo = _data["turmaSemestrePeriodo"];
         }
     }
 
@@ -4283,10 +4343,10 @@ export class MatriculaObterDto implements IMatriculaObterDto {
         data["alunoMatricula"] = this.alunoMatricula;
         data["turmaId"] = this.turmaId;
         data["turmaNome"] = this.turmaNome;
-        data["disciplinaNome"] = this.disciplinaNome;
-        data["professorNome"] = this.professorNome;
-        data["semestreAno"] = this.semestreAno;
-        data["semestrePeriodo"] = this.semestrePeriodo;
+        data["turmaDisciplinaNome"] = this.turmaDisciplinaNome;
+        data["turmaProfessorNome"] = this.turmaProfessorNome;
+        data["turmaSemestreAno"] = this.turmaSemestreAno;
+        data["turmaSemestrePeriodo"] = this.turmaSemestrePeriodo;
         return data;
     }
 }
@@ -4298,10 +4358,10 @@ export interface IMatriculaObterDto {
     alunoMatricula?: string | undefined;
     turmaId?: number;
     turmaNome?: string | undefined;
-    disciplinaNome?: string | undefined;
-    professorNome?: string | undefined;
-    semestreAno?: number;
-    semestrePeriodo?: number;
+    turmaDisciplinaNome?: string | undefined;
+    turmaProfessorNome?: string | undefined;
+    turmaSemestreAno?: number;
+    turmaSemestrePeriodo?: number;
 }
 
 export class MatriculaObterQuery extends QueryRequestBase implements IMatriculaObterQuery {
@@ -4803,6 +4863,7 @@ export class ProfessorObterDto implements IProfessorObterDto {
     especializacao?: Especializacao;
     usuarioId?: number | undefined;
     departamentoId?: number;
+    departamentoNome?: string | undefined;
 
     constructor(data?: IProfessorObterDto) {
         if (data) {
@@ -4821,6 +4882,7 @@ export class ProfessorObterDto implements IProfessorObterDto {
             this.especializacao = _data["especializacao"];
             this.usuarioId = _data["usuarioId"];
             this.departamentoId = _data["departamentoId"];
+            this.departamentoNome = _data["departamentoNome"];
         }
     }
 
@@ -4839,6 +4901,7 @@ export class ProfessorObterDto implements IProfessorObterDto {
         data["especializacao"] = this.especializacao;
         data["usuarioId"] = this.usuarioId;
         data["departamentoId"] = this.departamentoId;
+        data["departamentoNome"] = this.departamentoNome;
         return data;
     }
 }
@@ -4850,6 +4913,7 @@ export interface IProfessorObterDto {
     especializacao?: Especializacao;
     usuarioId?: number | undefined;
     departamentoId?: number;
+    departamentoNome?: string | undefined;
 }
 
 export class ProfessorObterQuery extends QueryRequestBase implements IProfessorObterQuery {
@@ -5128,7 +5192,9 @@ export interface IPaginatedListOfTurmaObterDto {
 export class TurmaObterDto implements ITurmaObterDto {
     id?: number;
     disciplinaId?: number;
+    disciplinaNome?: string | undefined;
     professorId?: number;
+    professorNome?: string | undefined;
     semestreAno?: number;
     semestrePeriodo?: number;
     nome?: string | undefined;
@@ -5146,7 +5212,9 @@ export class TurmaObterDto implements ITurmaObterDto {
         if (_data) {
             this.id = _data["id"];
             this.disciplinaId = _data["disciplinaId"];
+            this.disciplinaNome = _data["disciplinaNome"];
             this.professorId = _data["professorId"];
+            this.professorNome = _data["professorNome"];
             this.semestreAno = _data["semestreAno"];
             this.semestrePeriodo = _data["semestrePeriodo"];
             this.nome = _data["nome"];
@@ -5164,7 +5232,9 @@ export class TurmaObterDto implements ITurmaObterDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["disciplinaId"] = this.disciplinaId;
+        data["disciplinaNome"] = this.disciplinaNome;
         data["professorId"] = this.professorId;
+        data["professorNome"] = this.professorNome;
         data["semestreAno"] = this.semestreAno;
         data["semestrePeriodo"] = this.semestrePeriodo;
         data["nome"] = this.nome;
@@ -5175,7 +5245,9 @@ export class TurmaObterDto implements ITurmaObterDto {
 export interface ITurmaObterDto {
     id?: number;
     disciplinaId?: number;
+    disciplinaNome?: string | undefined;
     professorId?: number;
+    professorNome?: string | undefined;
     semestreAno?: number;
     semestrePeriodo?: number;
     nome?: string | undefined;

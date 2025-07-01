@@ -16,6 +16,7 @@ import {
   NotaSalvarCommand,
 } from 'web-api-client';
 import {AuthenticationService} from '../../../shared/services/authentication.service';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   templateUrl: './matriculas-listar.component.html',
@@ -27,6 +28,7 @@ export class MatriculasListarComponent implements OnInit {
   fb = inject(FormBuilder);
   authService = inject(AuthenticationService);
   turmaId = input<number>(null);
+  alunoId = input<number>(null);
   isTabelaRelacionada = input<boolean>(false);
   modalRealizarMatriculaVisivel = false;
   modalNotasVisivel = false;
@@ -47,7 +49,8 @@ export class MatriculasListarComponent implements OnInit {
   constructor(
     private matriculasClient: MatriculasClient,
     private avaliacoesClient: AvaliacoesClient,
-    private notasClient: NotasClient
+    private notasClient: NotasClient,
+    private nzModalService: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +71,7 @@ export class MatriculasListarComponent implements OnInit {
     this.filtro.sortField = sortField;
     this.filtro.sortOrder = sortOrder;
 
-    this.filtro.alunoId = +this.authService.obterUsuarioLogado.alunoId;
+    this.filtro.alunoId = this.alunoId() ?? +this.authService.obterUsuarioLogado.alunoId;
     this.filtro.turmaId = this.turmaId();
 
     Object.keys(this.filtro).forEach(k => (this.filtro[k] = this.filtro[k] === '' ? null : this.filtro[k]));
@@ -191,7 +194,13 @@ export class MatriculasListarComponent implements OnInit {
   }
 
   salvarNotas() {
-    if (!this.notasForm.valid || !this.matriculaSelecionada?.id) return;
+    if (!this.notasForm.valid || !this.matriculaSelecionada?.id) {
+      this.nzModalService.error({
+        nzTitle: 'Formulário Inválido',
+        nzContent: 'Verifique o formulário e preencha corretamente os campos obrigatórios!'
+      });
+      return;
+    }
 
     this.salvandoNotas = true;
     const promises: Promise<any>[] = [];
@@ -262,5 +271,31 @@ export class MatriculasListarComponent implements OnInit {
     });
 
     return avaliacoesComNota === totalAvaliacoes ? 'Média Final' : 'Média Parcial';
+  }
+
+  obterStatus(): string {
+    const titulo = this.obterTituloMedia();
+
+    if (titulo === 'Média Parcial') {
+      return 'Aguardando média final';
+    }
+
+    const media = this.calcularMediaFinal();
+    if (media >= 7) return 'Aprovado';
+    if (media >= 5) return 'Em Recuperação';
+    return 'Reprovado';
+  }
+
+  obterCorStatus(): string {
+    const titulo = this.obterTituloMedia();
+
+    if (titulo === 'Média Parcial') {
+      return 'default';
+    }
+
+    const media = this.calcularMediaFinal();
+    if (media >= 7) return 'green';
+    if (media >= 5) return 'gold';
+    return 'red';
   }
 }

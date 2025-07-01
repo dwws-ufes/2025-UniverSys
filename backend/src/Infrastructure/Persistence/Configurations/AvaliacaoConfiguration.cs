@@ -4,5 +4,6 @@ public class AvaliacaoConfiguration : IEntityTypeConfiguration<Avaliacao>
 {
     public void Configure(EntityTypeBuilder<Avaliacao> builder)
     {
+        
     }
 } 

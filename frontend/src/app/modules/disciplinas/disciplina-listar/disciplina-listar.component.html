@@ -14,6 +14,7 @@
         <tr>
           <th>Nome</th>
           <th>Código</th>
+          <th>Curso</th>
           <th>Carga Horária</th>
           <th>Ações</th>
         </tr>
@@ -22,12 +23,15 @@
         <tr *ngFor="let disciplina of disciplinas.items">
           <td>{{ disciplina.nome }}</td>
           <td>{{ disciplina.codigo }}</td>
+          <td>{{ disciplina.cursoNome }}</td>
           <td>{{ disciplina.cargaHoraria }}h</td>
           <td>
             <button nz-button nzType="default" nzSize="small" nzShape="circle" class="mr-2" (click)="editar(disciplina)">
               <span nz-icon nzType="edit"></span>
             </button>
-            <button nz-button nzType="default" nzDanger nzSize="small" nzShape="circle" (click)="excluir(disciplina)">
+            <button nz-button nzType="default" nzDanger nzSize="small" nzShape="circle"
+                    nz-popconfirm nzPopconfirmTitle="Tem certeza que deseja excluir esta disciplina?"
+                    (nzOnConfirm)="excluir(disciplina)">
               <span nz-icon nzType="delete"></span>
             </button>
           </td>

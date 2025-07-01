@@ -70,6 +70,11 @@ export class CursoFormComponent implements OnInit {
             this.router.navigate(['cursos', 'editar', r]);
           }
         });
+    } else {
+      this.nzModalService.error({
+        nzTitle: 'Formulário Inválido',
+        nzContent: 'Verifique o formulário e preencha corretamente os campos obrigatórios!'
+      });
     }
   }
 }

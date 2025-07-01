@@ -8,8 +8,8 @@ public class MatriculaObterDto
     public string AlunoMatricula { get; set; }
     public int TurmaId { get; set; }
     public string TurmaNome { get; set; }
-    public string DisciplinaNome { get; set; }
-    public string ProfessorNome { get; set; }
-    public int SemestreAno { get; set; }
-    public int SemestrePeriodo { get; set; }
+    public string TurmaDisciplinaNome { get; set; }
+    public string TurmaProfessorNome { get; set; }
+    public int TurmaSemestreAno { get; set; }
+    public int TurmaSemestrePeriodo { get; set; }
 } 

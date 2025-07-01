@@ -152,6 +152,11 @@ export class UsuarioFormComponent implements OnInit {
   salvar() {
     if (this.form.valid) {
       this.usuarioId ? this.atualizarUsuario() : this.cadastrarUsuario();
+    } else {
+      this.nzModalService.error({
+        nzTitle: 'Formulário Inválido',
+        nzContent: 'Verifique o formulário e preencha corretamente os campos obrigatórios!'
+      });
     }
   }
 

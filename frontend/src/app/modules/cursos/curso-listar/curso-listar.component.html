@@ -23,7 +23,9 @@
             <button nz-button nzType="default" nzSize="small" nzShape="circle" class="mr-2" (click)="editar(curso)">
               <span nz-icon nzType="edit"></span>
             </button>
-            <button nz-button nzType="default" nzDanger nzSize="small" nzShape="circle" (click)="excluir(curso)">
+            <button nz-button nzType="default" nzDanger nzSize="small" nzShape="circle"
+                    nz-popconfirm nzPopconfirmTitle="Tem certeza que deseja excluir este curso?"
+                    (nzOnConfirm)="excluir(curso)">
               <span nz-icon nzType="delete"></span>
             </button>
           </td>
