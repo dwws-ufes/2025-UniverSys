@@ -19,6 +19,15 @@
               </nz-form-item>
             </div>
 
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12" nzXl="12" nzXl="12">
+              <nz-form-item>
+                <nz-form-label [nzRequired]="!usuarioId">Nova Senha</nz-form-label>
+                <nz-form-control>
+                  <input type="password" nz-input formControlName="senha" placeholder="Nova Senha" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
             <div nz-col nzXs="24" nzSm="12">
               <nz-form-item>
                 <nz-form-label nzRequired>Nome</nz-form-label>
@@ -37,19 +46,60 @@
               </nz-form-item>
             </div>
 
-            <!-- <div nz-col nzXs="24" nzSm="12">
+            <div nz-col nzXs="24" nzSm="12">
               <nz-form-item>
-                <nz-form-label nzRequired> Tipo de Usuário </nz-form-label>
+                <nz-form-label nzRequired>Tipo de Usuário</nz-form-label>
                 <nz-form-control>
-                  <nz-select formControlName="tipoUsuario" nzPlaceHolder="Tipo de Usuário">
-                    <nz-option [nzValue]="TipoUsuario.Profissional" nzLabel="Profissional">
-                    </nz-option>
-                    <nz-option [nzValue]="TipoUsuario.Secretaria" nzLabel="Secretária">
+                  <nz-select formControlName="tipo" nzPlaceHolder="Selecione o tipo de usuário">
+                    <nz-option
+                      *ngFor="let tipo of tiposUsuario"
+                      [nzValue]="tipo.id"
+                      [nzLabel]="tipo.text">
                     </nz-option>
                   </nz-select>
                 </nz-form-control>
               </nz-form-item>
-            </div> -->
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" *ngIf="isTipoAluno">
+              <nz-form-item>
+                <nz-form-label nzRequired>Aluno</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    formControlName="alunoId"
+                    nzPlaceHolder="Selecione um aluno"
+                    nzShowSearch
+                    nzFilterOption
+                    [nzLoading]="carregandoAlunos">
+                    <nz-option
+                      *ngFor="let aluno of alunos"
+                      [nzValue]="aluno.id"
+                      [nzLabel]="aluno.nome + ' - ' + aluno.matricula">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" *ngIf="isTipoProfessor">
+              <nz-form-item>
+                <nz-form-label nzRequired>Professor</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    formControlName="professorId"
+                    nzPlaceHolder="Selecione um professor"
+                    nzShowSearch
+                    nzFilterOption
+                    [nzLoading]="carregandoProfessores">
+                    <nz-option
+                      *ngFor="let professor of professores"
+                      [nzValue]="professor.id"
+                      [nzLabel]="professor.nome + ' - ' + professor.cpf">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
           </div>
         </div>
           <div class="flex justify-end px-4 py-4 space-x-2 bg-blue-50 rounded-b-lg border-t">

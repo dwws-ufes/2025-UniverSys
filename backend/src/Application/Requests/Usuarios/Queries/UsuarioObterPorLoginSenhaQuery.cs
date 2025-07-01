@@ -31,15 +31,14 @@ public class UsuarioObterPorLoginSenhaQueryHandler : IRequestHandler<UsuarioObte
     {
         var passwordHasher = new PasswordHasher<Usuario>();
         var usuario = await context.Usuarios
-                .SingleOrDefaultAsync(x => x.Login == request.Login || x.Email == request.Login);
+            .Include(x => x.Aluno)
+            .Include(x => x.Professor)
+            .SingleOrDefaultAsync(x => x.Login == request.Login || x.Email == request.Login);
 
         if (usuario == null)
             return null;
 
         var result = passwordHasher.VerifyHashedPassword(usuario, usuario.Senha ?? "", request.Senha);
-
-        if (hostingEnvironment.IsDevelopment())
-            result = PasswordVerificationResult.Success;
 
         if (result == PasswordVerificationResult.Success)
         {

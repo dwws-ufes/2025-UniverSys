@@ -63,18 +63,19 @@
             </div>
           </div>
         </div>
-        <div class="flex justify-end px-4 py-4 space-x-2 bg-blue-50 rounded-b-lg border-t">
-          <button type="submit" nz-button nzType="primary" [nzLoading]="salvandoTurma">
-            {{ turmaId ? 'Salvar' : 'Cadastrar' }}
-          </button>
-        </div>
+        @if(podeEditar()) {
+          <div class="flex justify-end px-4 py-4 space-x-2 bg-blue-50 rounded-b-lg border-t">
+            <button type="submit" nz-button nzType="primary" [nzLoading]="salvandoTurma">
+              {{ turmaId ? 'Salvar' : 'Cadastrar' }}
+            </button>
+          </div>
+        }
       </form>
     </nz-tab>
 
     <nz-tab nzTitle="Matrículas">
       <div class="px-4 py-3">
-        <nz-empty nzNotFoundContent="Em desenvolvimento..." class="py-8">
-        </nz-empty>
+        <matriculas-listar [turmaId]="turmaId" [isTabelaRelacionada]="true"></matriculas-listar>
       </div>
     </nz-tab>
 

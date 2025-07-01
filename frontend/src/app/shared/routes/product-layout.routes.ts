@@ -1,5 +1,8 @@
 import {Routes} from '@angular/router';
 import { AdminGuard } from '../../authentication/admin-guard.service';
+import { AlunoGuard } from '../../authentication/aluno-guard.service';
+import { AdminOuAlunoGuard } from '../../authentication/admin-ou-aluno-guard.service';
+import { AdminOuProfessorGuard } from 'src/app/authentication/admin-ou-professor-guard.service';
 
 export const ProductLayout_ROUTES: Routes = [
   {
@@ -37,7 +40,7 @@ export const ProductLayout_ROUTES: Routes = [
   {
     path: 'turmas',
     loadChildren: () => import('../../modules/turmas/turma.module').then(m => m.TurmaModule),
-    canActivate: [AdminGuard],
+    canActivate: [AdminOuProfessorGuard],
     data: {
       title: 'Turmas'
     },
@@ -56,6 +59,22 @@ export const ProductLayout_ROUTES: Routes = [
     canActivate: [AdminGuard],
     data: {
       title: 'Alunos'
+    },
+  },
+  {
+    path: 'boletim',
+    loadChildren: () => import('../../modules/boletim/boletim.module').then(m => m.BoletimModule),
+    canActivate: [AlunoGuard],
+    data: {
+      title: 'Boletim'
+    },
+  },
+  {
+    path: 'matriculas',
+    loadChildren: () => import('../../modules/matriculas/matriculas.module').then(m => m.MatriculasModule),
+    canActivate: [AlunoGuard],
+    data: {
+      title: 'Matrículas'
     },
   },
 ];

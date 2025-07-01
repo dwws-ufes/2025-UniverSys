@@ -13,5 +13,7 @@ public class UsuarioDto
     public TipoUsuario Tipo { get; set; }
     public bool Administrador => Tipo == TipoUsuario.Administrador;
     public string AdministradorString => Administrador ? "Sim" : "Não";
-
+    public int? AlunoId { get; set; }
+    public int? AlunoCursoId { get; set; }
+    public int? ProfessorId { get; set; }
 }

@@ -8,6 +8,7 @@ import {environment} from 'src/environments/environment';
 import {SideNavInterface} from '../../interfaces/side-nav.type';
 import {AuthenticationService} from '../../services/authentication.service';
 import {ROUTES} from './../side-nav/side-nav-routes.config';
+import { TipoUsuario } from 'web-api-client';
 
 
 @Component({
@@ -108,8 +109,7 @@ export class MenuComponent {
       return true;
     }
 
-    //TODO
-    return true
+    return item.permissions.includes(this.authenticationService.obterTipoUsuario);
   }
 
 

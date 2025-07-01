@@ -14,7 +14,8 @@ public class UsuarioProfile : Profile
 
         CreateMap<UsuarioAlterarCommand, Usuario>()
             .ForMember(x => x.Email, y => y.MapFrom(z => string.IsNullOrEmpty(z.Email) ? "" : z.Email.ToLower()))
-            .ForMember(x => x.Login, y => y.MapFrom(z => string.IsNullOrEmpty(z.Login) ? "" : z.Login.ToLower()));
+            .ForMember(x => x.Login, y => y.MapFrom(z => string.IsNullOrEmpty(z.Login) ? "" : z.Login.ToLower()))
+            .ForMember(x => x.Senha, y => y.Ignore());
 
         CreateMap<Usuario, UsuarioDto>();
     }

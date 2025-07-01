@@ -65,8 +65,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.authGuard.setLoggedIn(true);
 
 
-          //TODO
-          this.router.navigate(['usuarios']);
+          this.router.navigate(['/']);
         },
         error: err => {
           this.authGuard.setLoggedIn(false);

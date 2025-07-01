@@ -22,16 +22,11 @@ public class ObterPorLoginQueryHandler : IRequestHandler<UsuarioObterPorLoginQue
 
     public async Task<UsuarioDto> Handle(UsuarioObterPorLoginQuery request, CancellationToken cancellationToken)
     {
-        var usuario = await _context.Usuarios
+        var dto = await _context.Usuarios
+            .ProjectTo<UsuarioDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(x => x.Login == request.Login || x.Email == request.Login, cancellationToken: cancellationToken);
 
-        if (usuario == null)
-            return null;
 
-
-        var usuarioVm = _mapper.Map<UsuarioDto>(usuario);
-
-
-        return usuarioVm;
+        return dto;
     }
 }

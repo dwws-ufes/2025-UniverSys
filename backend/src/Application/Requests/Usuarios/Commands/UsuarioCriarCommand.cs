@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.DynamicLinq;
 using Microsoft.Extensions.Configuration;
+using UniverSys.Domain.Enums;
 
 namespace UniverSys.Application.Requests.Usuarios.Commands
 {
@@ -10,9 +11,9 @@ namespace UniverSys.Application.Requests.Usuarios.Commands
         public string Senha { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-        public string Telefone { get; set; }
-        public bool TermoAceito { get; set; }
-        public int? SellerId { get; set; }
+        public TipoUsuario Tipo { get; set; }
+        public int? AlunoId { get; set; }
+        public int? ProfessorId { get; set; }
     }
 
     public class UsuarioCriarCommandHandler : IRequestHandler<UsuarioCriarCommand, UsuarioDto>
@@ -46,16 +47,8 @@ namespace UniverSys.Application.Requests.Usuarios.Commands
 
         private static void ConfigurarSenhaUsuario(UsuarioCriarCommand request, Usuario usuario)
         {
-            if (String.IsNullOrWhiteSpace(request.Senha))
-            {
-                usuario.DataSolicitacaoRecuperacaoSenha = DateTime.UtcNow;
-                usuario.TokenRecuperacaoSenha = Guid.NewGuid().ToString();
-            }
-            else
-            {
-                var passwordHasher = new PasswordHasher<Usuario>();
-                usuario.Senha = passwordHasher.HashPassword(usuario, request.Senha);
-            }
+            var passwordHasher = new PasswordHasher<Usuario>();
+            usuario.Senha = passwordHasher.HashPassword(usuario, request.Senha);
         }
 
         private async Task VerificarUsuarioExistente(UsuarioCriarCommand request)
@@ -65,11 +58,6 @@ namespace UniverSys.Application.Requests.Usuarios.Commands
 
             if (await _context.Usuarios.AnyAsync(x => x.Email.Equals(request.Email)))
                 throw new ValidationException("Email", "Já existe um cadastro com o e-mail informado");
-
-            if (!request.TermoAceito)
-            {
-                throw new ValidationException("TermoNaoAceito", "O termo de privacidade deve ser aceito para continuar");
-            }
         }
 
     }

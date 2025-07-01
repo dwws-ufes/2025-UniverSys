@@ -82,4 +82,14 @@ export class AuthenticationService {
     return this.obterTipoUsuario === TipoUsuario.Aluno;
   }
 
+  getAlunoId(): number | null {
+    const usuario = this.obterUsuarioLogado;
+    return usuario?.alunoId || null;
+  }
+
+  getProfessorId(): number | null {
+    const usuario = this.obterUsuarioLogado;
+    return usuario?.professorId || null;
+  }
+
 }

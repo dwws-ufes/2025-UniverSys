@@ -1,3 +1,4 @@
+import { TipoUsuario } from 'web-api-client';
 import { SideNavInterface } from '../../interfaces/side-nav.type';
 export const ROUTES: SideNavInterface[] = [
   {
@@ -7,7 +8,7 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'user',
     submenu: [],
-    permissions: [],
+    permissions: [TipoUsuario.Administrador],
   },
   {
     path: 'cursos',
@@ -16,6 +17,7 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'book',
     submenu: [],
+    permissions: [TipoUsuario.Administrador],
   },
   {
     path: 'departamentos',
@@ -24,6 +26,7 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'apartment',
     submenu: [],
+    permissions: [TipoUsuario.Administrador],
   },
   {
     path: 'disciplinas',
@@ -32,6 +35,7 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'read',
     submenu: [],
+    permissions: [TipoUsuario.Administrador],
   },
   {
     path: 'turmas',
@@ -40,6 +44,7 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'team',
     submenu: [],
+    permissions: [TipoUsuario.Administrador, TipoUsuario.Professor],
   },
   {
     path: 'professores',
@@ -48,6 +53,7 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'user-delete',
     submenu: [],
+    permissions: [TipoUsuario.Administrador],
   },
   {
     path: 'alunos',
@@ -56,5 +62,24 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'usergroup-add',
     submenu: [],
+    permissions: [TipoUsuario.Administrador],
+  },
+  {
+    path: 'boletim',
+    title: 'Boletim',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'bar-chart',
+    submenu: [],
+    permissions: [TipoUsuario.Aluno],
+  },
+  {
+    path: 'matriculas',
+    title: 'Matrículas',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'form',
+    submenu: [],
+    permissions: [TipoUsuario.Aluno],
   }
 ];

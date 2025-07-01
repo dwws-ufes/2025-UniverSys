@@ -6,4 +6,5 @@ public class Avaliacao
     public int Peso { get; set; }
     public int TurmaId { get; set; }
     public Turma Turma { get; set; }
+    public List<Nota> Notas { get; set; } = [];
 }

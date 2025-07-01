@@ -720,6 +720,266 @@
         }
       }
     },
+    "/api/Matriculas": {
+      "post": {
+        "tags": [
+          "Matriculas"
+        ],
+        "operationId": "Matriculas_RealizarMatricula",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatriculaRealizarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Matriculas/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Matriculas"
+        ],
+        "operationId": "Matriculas_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatriculaObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Matriculas/obter": {
+      "post": {
+        "tags": [
+          "Matriculas"
+        ],
+        "operationId": "Matriculas_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatriculaObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfMatriculaObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Matriculas/{id}": {
+      "delete": {
+        "tags": [
+          "Matriculas"
+        ],
+        "operationId": "Matriculas_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Notas": {
+      "post": {
+        "tags": [
+          "Notas"
+        ],
+        "operationId": "Notas_Salvar",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotaSalvarCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Notas/obter-por-id/{id}": {
+      "get": {
+        "tags": [
+          "Notas"
+        ],
+        "operationId": "Notas_ObterPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotaObterPorIdDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Notas/obter": {
+      "post": {
+        "tags": [
+          "Notas"
+        ],
+        "operationId": "Notas_Obter",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotaObterQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfNotaObterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Notas/{id}": {
+      "delete": {
+        "tags": [
+          "Notas"
+        ],
+        "operationId": "Notas_Excluir",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Professores": {
       "post": {
         "tags": [
@@ -1908,6 +2168,325 @@
                 "type": "integer",
                 "format": "int32",
                 "nullable": true
+              },
+              "alunoId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "MatriculaRealizarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "alunoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MatriculaObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alunoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alunoNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "alunoMatricula": {
+            "type": "string",
+            "nullable": true
+          },
+          "turmaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "disciplinaNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "professorNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "semestreAno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestrePeriodo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginatedListOfMatriculaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/MatriculaObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MatriculaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alunoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alunoNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "alunoMatricula": {
+            "type": "string",
+            "nullable": true
+          },
+          "turmaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "disciplinaNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "professorNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "semestreAno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "semestrePeriodo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MatriculaObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "alunoId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "turmaId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "disciplinaId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "professorId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "semestreAno": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "semestrePeriodo": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "NotaSalvarCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "avaliacaoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matriculaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valor": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "NotaObterPorIdDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "avaliacaoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matriculaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valor": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "PaginatedListOfNotaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/NotaObterDto"
+            }
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "NotaObterDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "avaliacaoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matriculaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valor": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "NotaObterQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QueryRequestBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "avaliacaoId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "matriculaId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
               }
             }
           }
@@ -2316,6 +2895,21 @@
           "administradorString": {
             "type": "string",
             "nullable": true
+          },
+          "alunoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "alunoCursoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "professorId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },
@@ -2439,14 +3033,15 @@
             "type": "string",
             "nullable": true
           },
-          "telefone": {
-            "type": "string",
+          "tipo": {
+            "$ref": "#/components/schemas/TipoUsuario"
+          },
+          "alunoId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
-          "termoAceito": {
-            "type": "boolean"
-          },
-          "sellerId": {
+          "professorId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -2471,6 +3066,23 @@
           },
           "email": {
             "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoUsuario"
+          },
+          "alunoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "professorId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         }

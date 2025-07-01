@@ -21,15 +21,11 @@
 
         public async Task<UsuarioDto> Handle(UsuarioObterPorIdQuery request, CancellationToken cancellationToken)
         {
-            var usuario = await _context.Usuarios
+            var dto = await _context.Usuarios
+                .ProjectTo<UsuarioDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            if (usuario == null)
-                return null;
-
-            var usuarioVm = _mapper.Map<UsuarioDto>(usuario);
-
-            return usuarioVm;
+            return dto;
         }
     }
 }

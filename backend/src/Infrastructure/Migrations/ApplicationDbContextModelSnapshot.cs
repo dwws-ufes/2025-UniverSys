@@ -155,10 +155,6 @@ namespace UniverSys.Infrastructure.Migrations
                     b.Property<int>("AlunoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<int>("TurmaId")
                         .HasColumnType("int");
 
@@ -179,10 +175,10 @@ namespace UniverSys.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AlunoId")
+                    b.Property<int>("AvaliacaoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AvaliacaoId")
+                    b.Property<int>("MatriculaId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
@@ -190,9 +186,9 @@ namespace UniverSys.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AlunoId");
-
                     b.HasIndex("AvaliacaoId");
+
+                    b.HasIndex("MatriculaId");
 
                     b.ToTable("Notas");
                 });
@@ -429,7 +425,7 @@ namespace UniverSys.Infrastructure.Migrations
 
             modelBuilder.Entity("UniverSys.Domain.Entities.Matricula", b =>
                 {
-                    b.HasOne("UniverSys.Domain.Entities.Aluno", null)
+                    b.HasOne("UniverSys.Domain.Entities.Aluno", "Aluno")
                         .WithMany("Matriculas")
                         .HasForeignKey("AlunoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -441,26 +437,28 @@ namespace UniverSys.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Aluno");
+
                     b.Navigation("Turma");
                 });
 
             modelBuilder.Entity("UniverSys.Domain.Entities.Nota", b =>
                 {
-                    b.HasOne("UniverSys.Domain.Entities.Aluno", "Aluno")
-                        .WithMany()
-                        .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UniverSys.Domain.Entities.Avaliacao", "Avaliacao")
-                        .WithMany()
+                        .WithMany("Notas")
                         .HasForeignKey("AvaliacaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Aluno");
+                    b.HasOne("UniverSys.Domain.Entities.Matricula", "Matricula")
+                        .WithMany("Notas")
+                        .HasForeignKey("MatriculaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Avaliacao");
+
+                    b.Navigation("Matricula");
                 });
 
             modelBuilder.Entity("UniverSys.Domain.Entities.Professor", b =>
@@ -515,6 +513,11 @@ namespace UniverSys.Infrastructure.Migrations
                     b.Navigation("Matriculas");
                 });
 
+            modelBuilder.Entity("UniverSys.Domain.Entities.Avaliacao", b =>
+                {
+                    b.Navigation("Notas");
+                });
+
             modelBuilder.Entity("UniverSys.Domain.Entities.Curso", b =>
                 {
                     b.Navigation("Alunos");
@@ -530,6 +533,11 @@ namespace UniverSys.Infrastructure.Migrations
             modelBuilder.Entity("UniverSys.Domain.Entities.Disciplina", b =>
                 {
                     b.Navigation("Turmas");
+                });
+
+            modelBuilder.Entity("UniverSys.Domain.Entities.Matricula", b =>
+                {
+                    b.Navigation("Notas");
                 });
 
             modelBuilder.Entity("UniverSys.Domain.Entities.Professor", b =>

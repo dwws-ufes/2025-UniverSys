@@ -24,6 +24,10 @@ export class DefaultGuard {
       this.router.navigateByUrl('/usuarios');
       return;
     }
-    this.router.navigateByUrl('/');
+    if (this.authenticationService.isAluno()) {
+      this.router.navigateByUrl('/matriculas');
+      return;
+    }
+    this.router.navigateByUrl('/turmas');
   }
 }

@@ -262,6 +262,85 @@ Content-Type: application/json
 DELETE {{baseUrl}}/alunos/1
 
 ### ==================================================
+### MATRICULAS
+### ==================================================
+
+### Realizar Matrícula (Criar)
+POST {{baseUrl}}/matriculas
+Content-Type: application/json
+
+{
+  "alunoId": 1,
+  "turmaId": 1
+}
+
+### Obter Matricula por ID
+GET {{baseUrl}}/matriculas/obter-por-id/1
+
+### Obter Matriculas (Listagem)
+POST {{baseUrl}}/matriculas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10
+}
+
+### Obter Matriculas por Aluno
+POST {{baseUrl}}/matriculas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "alunoId": 1
+}
+
+### Obter Matriculas por Turma
+POST {{baseUrl}}/matriculas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "turmaId": 1
+}
+
+### Obter Matriculas por Disciplina
+POST {{baseUrl}}/matriculas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "disciplinaId": 1
+}
+
+### Obter Matriculas por Professor
+POST {{baseUrl}}/matriculas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "professorId": 1
+}
+
+### Obter Matriculas por Semestre
+POST {{baseUrl}}/matriculas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "semestreAno": 2024,
+  "semestrePeriodo": 1
+}
+
+### Excluir Matricula
+DELETE {{baseUrl}}/matriculas/1
+
+### ==================================================
 ### CENÁRIO DE TESTE COMPLETO
 ### ==================================================
 
@@ -328,4 +407,74 @@ Content-Type: application/json
   "cpf": "55566677788",
   "usuarioId": 2,
   "cursoId": 1
-} 
+}
+
+### ==================================================
+### NOTAS
+### ==================================================
+
+### Salvar Nota (Criar)
+POST {{baseUrl}}/notas
+Content-Type: application/json
+
+{
+  "avaliacaoId": 1,
+  "matriculaId": 1,
+  "valor": 8.5
+}
+
+### Salvar Nota (Atualizar)
+POST {{baseUrl}}/notas
+Content-Type: application/json
+
+{
+  "id": 1,
+  "avaliacaoId": 1,
+  "matriculaId": 1,
+  "valor": 9.0
+}
+
+### Obter Nota por ID
+GET {{baseUrl}}/notas/obter-por-id/1
+
+### Obter Notas (Listagem)
+POST {{baseUrl}}/notas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10
+}
+
+### Obter Notas por Avaliação
+POST {{baseUrl}}/notas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "avaliacaoId": 1
+}
+
+### Obter Notas por Matrícula
+POST {{baseUrl}}/notas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "matriculaId": 1
+}
+
+### Obter Notas por Valor
+POST {{baseUrl}}/notas/obter
+Content-Type: application/json
+
+{
+  "pageIndex": 1,
+  "pageSize": 10,
+  "valor": 8.5
+}
+
+### Excluir Nota
+DELETE {{baseUrl}}/notas/1 

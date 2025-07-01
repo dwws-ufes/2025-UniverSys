@@ -1299,6 +1299,470 @@ export class DisciplinasClient implements IDisciplinasClient {
     }
 }
 
+export interface IMatriculasClient {
+    realizarMatricula(request: MatriculaRealizarCommand): Observable<number>;
+    obterPorId(id: number): Observable<MatriculaObterPorIdDto>;
+    obter(query: MatriculaObterQuery): Observable<PaginatedListOfMatriculaObterDto>;
+    excluir(id: number): Observable<FileResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class MatriculasClient implements IMatriculasClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    realizarMatricula(request: MatriculaRealizarCommand): Observable<number> {
+        let url_ = this.baseUrl + "/api/Matriculas";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRealizarMatricula(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRealizarMatricula(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processRealizarMatricula(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obterPorId(id: number): Observable<MatriculaObterPorIdDto> {
+        let url_ = this.baseUrl + "/api/Matriculas/obter-por-id/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObterPorId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObterPorId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MatriculaObterPorIdDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MatriculaObterPorIdDto>;
+        }));
+    }
+
+    protected processObterPorId(response: HttpResponseBase): Observable<MatriculaObterPorIdDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MatriculaObterPorIdDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obter(query: MatriculaObterQuery): Observable<PaginatedListOfMatriculaObterDto> {
+        let url_ = this.baseUrl + "/api/Matriculas/obter";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObter(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObter(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PaginatedListOfMatriculaObterDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PaginatedListOfMatriculaObterDto>;
+        }));
+    }
+
+    protected processObter(response: HttpResponseBase): Observable<PaginatedListOfMatriculaObterDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PaginatedListOfMatriculaObterDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    excluir(id: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/Matriculas/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExcluir(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExcluir(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse>;
+        }));
+    }
+
+    protected processExcluir(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export interface INotasClient {
+    salvar(request: NotaSalvarCommand): Observable<number>;
+    obterPorId(id: number): Observable<NotaObterPorIdDto>;
+    obter(query: NotaObterQuery): Observable<PaginatedListOfNotaObterDto>;
+    excluir(id: number): Observable<FileResponse>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class NotasClient implements INotasClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    salvar(request: NotaSalvarCommand): Observable<number> {
+        let url_ = this.baseUrl + "/api/Notas";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSalvar(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSalvar(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processSalvar(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obterPorId(id: number): Observable<NotaObterPorIdDto> {
+        let url_ = this.baseUrl + "/api/Notas/obter-por-id/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObterPorId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObterPorId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<NotaObterPorIdDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<NotaObterPorIdDto>;
+        }));
+    }
+
+    protected processObterPorId(response: HttpResponseBase): Observable<NotaObterPorIdDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = NotaObterPorIdDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obter(query: NotaObterQuery): Observable<PaginatedListOfNotaObterDto> {
+        let url_ = this.baseUrl + "/api/Notas/obter";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObter(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObter(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PaginatedListOfNotaObterDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PaginatedListOfNotaObterDto>;
+        }));
+    }
+
+    protected processObter(response: HttpResponseBase): Observable<PaginatedListOfNotaObterDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PaginatedListOfNotaObterDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    excluir(id: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/Notas/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExcluir(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExcluir(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse>;
+        }));
+    }
+
+    protected processExcluir(response: HttpResponseBase): Observable<FileResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IProfessoresClient {
     salvar(request: ProfessorSalvarCommand): Observable<number>;
     obterPorId(id: number): Observable<ProfessorObterPorIdDto>;
@@ -3541,6 +4005,7 @@ export class DisciplinaObterQuery extends QueryRequestBase implements IDisciplin
     codigo?: string | undefined;
     cargaHoraria?: number | undefined;
     cursoId?: number | undefined;
+    alunoId?: number | undefined;
 
     constructor(data?: IDisciplinaObterQuery) {
         super(data);
@@ -3554,6 +4019,7 @@ export class DisciplinaObterQuery extends QueryRequestBase implements IDisciplin
             this.codigo = _data["codigo"];
             this.cargaHoraria = _data["cargaHoraria"];
             this.cursoId = _data["cursoId"];
+            this.alunoId = _data["alunoId"];
         }
     }
 
@@ -3571,6 +4037,7 @@ export class DisciplinaObterQuery extends QueryRequestBase implements IDisciplin
         data["codigo"] = this.codigo;
         data["cargaHoraria"] = this.cargaHoraria;
         data["cursoId"] = this.cursoId;
+        data["alunoId"] = this.alunoId;
         super.toJSON(data);
         return data;
     }
@@ -3582,6 +4049,565 @@ export interface IDisciplinaObterQuery extends IQueryRequestBase {
     codigo?: string | undefined;
     cargaHoraria?: number | undefined;
     cursoId?: number | undefined;
+    alunoId?: number | undefined;
+}
+
+export class MatriculaRealizarCommand implements IMatriculaRealizarCommand {
+    alunoId?: number;
+    turmaId?: number;
+
+    constructor(data?: IMatriculaRealizarCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.alunoId = _data["alunoId"];
+            this.turmaId = _data["turmaId"];
+        }
+    }
+
+    static fromJS(data: any): MatriculaRealizarCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatriculaRealizarCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["alunoId"] = this.alunoId;
+        data["turmaId"] = this.turmaId;
+        return data;
+    }
+}
+
+export interface IMatriculaRealizarCommand {
+    alunoId?: number;
+    turmaId?: number;
+}
+
+export class MatriculaObterPorIdDto implements IMatriculaObterPorIdDto {
+    id?: number;
+    alunoId?: number;
+    alunoNome?: string | undefined;
+    alunoMatricula?: string | undefined;
+    turmaId?: number;
+    turmaNome?: string | undefined;
+    disciplinaNome?: string | undefined;
+    professorNome?: string | undefined;
+    semestreAno?: number;
+    semestrePeriodo?: number;
+
+    constructor(data?: IMatriculaObterPorIdDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.alunoId = _data["alunoId"];
+            this.alunoNome = _data["alunoNome"];
+            this.alunoMatricula = _data["alunoMatricula"];
+            this.turmaId = _data["turmaId"];
+            this.turmaNome = _data["turmaNome"];
+            this.disciplinaNome = _data["disciplinaNome"];
+            this.professorNome = _data["professorNome"];
+            this.semestreAno = _data["semestreAno"];
+            this.semestrePeriodo = _data["semestrePeriodo"];
+        }
+    }
+
+    static fromJS(data: any): MatriculaObterPorIdDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatriculaObterPorIdDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["alunoId"] = this.alunoId;
+        data["alunoNome"] = this.alunoNome;
+        data["alunoMatricula"] = this.alunoMatricula;
+        data["turmaId"] = this.turmaId;
+        data["turmaNome"] = this.turmaNome;
+        data["disciplinaNome"] = this.disciplinaNome;
+        data["professorNome"] = this.professorNome;
+        data["semestreAno"] = this.semestreAno;
+        data["semestrePeriodo"] = this.semestrePeriodo;
+        return data;
+    }
+}
+
+export interface IMatriculaObterPorIdDto {
+    id?: number;
+    alunoId?: number;
+    alunoNome?: string | undefined;
+    alunoMatricula?: string | undefined;
+    turmaId?: number;
+    turmaNome?: string | undefined;
+    disciplinaNome?: string | undefined;
+    professorNome?: string | undefined;
+    semestreAno?: number;
+    semestrePeriodo?: number;
+}
+
+export class PaginatedListOfMatriculaObterDto implements IPaginatedListOfMatriculaObterDto {
+    items?: MatriculaObterDto[] | undefined;
+    pageIndex?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalCount?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
+
+    constructor(data?: IPaginatedListOfMatriculaObterDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(MatriculaObterDto.fromJS(item));
+            }
+            this.pageIndex = _data["pageIndex"];
+            this.pageSize = _data["pageSize"];
+            this.totalPages = _data["totalPages"];
+            this.totalCount = _data["totalCount"];
+            this.hasPreviousPage = _data["hasPreviousPage"];
+            this.hasNextPage = _data["hasNextPage"];
+        }
+    }
+
+    static fromJS(data: any): PaginatedListOfMatriculaObterDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PaginatedListOfMatriculaObterDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["pageIndex"] = this.pageIndex;
+        data["pageSize"] = this.pageSize;
+        data["totalPages"] = this.totalPages;
+        data["totalCount"] = this.totalCount;
+        data["hasPreviousPage"] = this.hasPreviousPage;
+        data["hasNextPage"] = this.hasNextPage;
+        return data;
+    }
+}
+
+export interface IPaginatedListOfMatriculaObterDto {
+    items?: MatriculaObterDto[] | undefined;
+    pageIndex?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalCount?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
+}
+
+export class MatriculaObterDto implements IMatriculaObterDto {
+    id?: number;
+    alunoId?: number;
+    alunoNome?: string | undefined;
+    alunoMatricula?: string | undefined;
+    turmaId?: number;
+    turmaNome?: string | undefined;
+    disciplinaNome?: string | undefined;
+    professorNome?: string | undefined;
+    semestreAno?: number;
+    semestrePeriodo?: number;
+
+    constructor(data?: IMatriculaObterDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.alunoId = _data["alunoId"];
+            this.alunoNome = _data["alunoNome"];
+            this.alunoMatricula = _data["alunoMatricula"];
+            this.turmaId = _data["turmaId"];
+            this.turmaNome = _data["turmaNome"];
+            this.disciplinaNome = _data["disciplinaNome"];
+            this.professorNome = _data["professorNome"];
+            this.semestreAno = _data["semestreAno"];
+            this.semestrePeriodo = _data["semestrePeriodo"];
+        }
+    }
+
+    static fromJS(data: any): MatriculaObterDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatriculaObterDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["alunoId"] = this.alunoId;
+        data["alunoNome"] = this.alunoNome;
+        data["alunoMatricula"] = this.alunoMatricula;
+        data["turmaId"] = this.turmaId;
+        data["turmaNome"] = this.turmaNome;
+        data["disciplinaNome"] = this.disciplinaNome;
+        data["professorNome"] = this.professorNome;
+        data["semestreAno"] = this.semestreAno;
+        data["semestrePeriodo"] = this.semestrePeriodo;
+        return data;
+    }
+}
+
+export interface IMatriculaObterDto {
+    id?: number;
+    alunoId?: number;
+    alunoNome?: string | undefined;
+    alunoMatricula?: string | undefined;
+    turmaId?: number;
+    turmaNome?: string | undefined;
+    disciplinaNome?: string | undefined;
+    professorNome?: string | undefined;
+    semestreAno?: number;
+    semestrePeriodo?: number;
+}
+
+export class MatriculaObterQuery extends QueryRequestBase implements IMatriculaObterQuery {
+    id?: number | undefined;
+    alunoId?: number | undefined;
+    turmaId?: number | undefined;
+    disciplinaId?: number | undefined;
+    professorId?: number | undefined;
+    semestreAno?: number | undefined;
+    semestrePeriodo?: number | undefined;
+
+    constructor(data?: IMatriculaObterQuery) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.alunoId = _data["alunoId"];
+            this.turmaId = _data["turmaId"];
+            this.disciplinaId = _data["disciplinaId"];
+            this.professorId = _data["professorId"];
+            this.semestreAno = _data["semestreAno"];
+            this.semestrePeriodo = _data["semestrePeriodo"];
+        }
+    }
+
+    static fromJS(data: any): MatriculaObterQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatriculaObterQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["alunoId"] = this.alunoId;
+        data["turmaId"] = this.turmaId;
+        data["disciplinaId"] = this.disciplinaId;
+        data["professorId"] = this.professorId;
+        data["semestreAno"] = this.semestreAno;
+        data["semestrePeriodo"] = this.semestrePeriodo;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IMatriculaObterQuery extends IQueryRequestBase {
+    id?: number | undefined;
+    alunoId?: number | undefined;
+    turmaId?: number | undefined;
+    disciplinaId?: number | undefined;
+    professorId?: number | undefined;
+    semestreAno?: number | undefined;
+    semestrePeriodo?: number | undefined;
+}
+
+export class NotaSalvarCommand implements INotaSalvarCommand {
+    id?: number | undefined;
+    avaliacaoId?: number;
+    matriculaId?: number;
+    valor?: number;
+
+    constructor(data?: INotaSalvarCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.avaliacaoId = _data["avaliacaoId"];
+            this.matriculaId = _data["matriculaId"];
+            this.valor = _data["valor"];
+        }
+    }
+
+    static fromJS(data: any): NotaSalvarCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotaSalvarCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["avaliacaoId"] = this.avaliacaoId;
+        data["matriculaId"] = this.matriculaId;
+        data["valor"] = this.valor;
+        return data;
+    }
+}
+
+export interface INotaSalvarCommand {
+    id?: number | undefined;
+    avaliacaoId?: number;
+    matriculaId?: number;
+    valor?: number;
+}
+
+export class NotaObterPorIdDto implements INotaObterPorIdDto {
+    id?: number;
+    avaliacaoId?: number;
+    matriculaId?: number;
+    valor?: number;
+
+    constructor(data?: INotaObterPorIdDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.avaliacaoId = _data["avaliacaoId"];
+            this.matriculaId = _data["matriculaId"];
+            this.valor = _data["valor"];
+        }
+    }
+
+    static fromJS(data: any): NotaObterPorIdDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotaObterPorIdDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["avaliacaoId"] = this.avaliacaoId;
+        data["matriculaId"] = this.matriculaId;
+        data["valor"] = this.valor;
+        return data;
+    }
+}
+
+export interface INotaObterPorIdDto {
+    id?: number;
+    avaliacaoId?: number;
+    matriculaId?: number;
+    valor?: number;
+}
+
+export class PaginatedListOfNotaObterDto implements IPaginatedListOfNotaObterDto {
+    items?: NotaObterDto[] | undefined;
+    pageIndex?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalCount?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
+
+    constructor(data?: IPaginatedListOfNotaObterDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(NotaObterDto.fromJS(item));
+            }
+            this.pageIndex = _data["pageIndex"];
+            this.pageSize = _data["pageSize"];
+            this.totalPages = _data["totalPages"];
+            this.totalCount = _data["totalCount"];
+            this.hasPreviousPage = _data["hasPreviousPage"];
+            this.hasNextPage = _data["hasNextPage"];
+        }
+    }
+
+    static fromJS(data: any): PaginatedListOfNotaObterDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PaginatedListOfNotaObterDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["pageIndex"] = this.pageIndex;
+        data["pageSize"] = this.pageSize;
+        data["totalPages"] = this.totalPages;
+        data["totalCount"] = this.totalCount;
+        data["hasPreviousPage"] = this.hasPreviousPage;
+        data["hasNextPage"] = this.hasNextPage;
+        return data;
+    }
+}
+
+export interface IPaginatedListOfNotaObterDto {
+    items?: NotaObterDto[] | undefined;
+    pageIndex?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalCount?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
+}
+
+export class NotaObterDto implements INotaObterDto {
+    id?: number;
+    avaliacaoId?: number;
+    matriculaId?: number;
+    valor?: number;
+
+    constructor(data?: INotaObterDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.avaliacaoId = _data["avaliacaoId"];
+            this.matriculaId = _data["matriculaId"];
+            this.valor = _data["valor"];
+        }
+    }
+
+    static fromJS(data: any): NotaObterDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotaObterDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["avaliacaoId"] = this.avaliacaoId;
+        data["matriculaId"] = this.matriculaId;
+        data["valor"] = this.valor;
+        return data;
+    }
+}
+
+export interface INotaObterDto {
+    id?: number;
+    avaliacaoId?: number;
+    matriculaId?: number;
+    valor?: number;
+}
+
+export class NotaObterQuery extends QueryRequestBase implements INotaObterQuery {
+    avaliacaoId?: number | undefined;
+    matriculaId?: number | undefined;
+
+    constructor(data?: INotaObterQuery) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.avaliacaoId = _data["avaliacaoId"];
+            this.matriculaId = _data["matriculaId"];
+        }
+    }
+
+    static fromJS(data: any): NotaObterQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotaObterQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["avaliacaoId"] = this.avaliacaoId;
+        data["matriculaId"] = this.matriculaId;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface INotaObterQuery extends IQueryRequestBase {
+    avaliacaoId?: number | undefined;
+    matriculaId?: number | undefined;
 }
 
 export class ProfessorSalvarCommand implements IProfessorSalvarCommand {
@@ -4218,6 +5244,9 @@ export class UsuarioDto implements IUsuarioDto {
     tipo?: TipoUsuario;
     administrador?: boolean;
     administradorString?: string | undefined;
+    alunoId?: number | undefined;
+    alunoCursoId?: number | undefined;
+    professorId?: number | undefined;
 
     constructor(data?: IUsuarioDto) {
         if (data) {
@@ -4239,6 +5268,9 @@ export class UsuarioDto implements IUsuarioDto {
             this.tipo = _data["tipo"];
             this.administrador = _data["administrador"];
             this.administradorString = _data["administradorString"];
+            this.alunoId = _data["alunoId"];
+            this.alunoCursoId = _data["alunoCursoId"];
+            this.professorId = _data["professorId"];
         }
     }
 
@@ -4260,6 +5292,9 @@ export class UsuarioDto implements IUsuarioDto {
         data["tipo"] = this.tipo;
         data["administrador"] = this.administrador;
         data["administradorString"] = this.administradorString;
+        data["alunoId"] = this.alunoId;
+        data["alunoCursoId"] = this.alunoCursoId;
+        data["professorId"] = this.professorId;
         return data;
     }
 }
@@ -4274,6 +5309,9 @@ export interface IUsuarioDto {
     tipo?: TipoUsuario;
     administrador?: boolean;
     administradorString?: string | undefined;
+    alunoId?: number | undefined;
+    alunoCursoId?: number | undefined;
+    professorId?: number | undefined;
 }
 
 export enum TipoUsuario {
@@ -4416,9 +5454,9 @@ export class UsuarioCriarCommand implements IUsuarioCriarCommand {
     senha?: string | undefined;
     nome?: string | undefined;
     email?: string | undefined;
-    telefone?: string | undefined;
-    termoAceito?: boolean;
-    sellerId?: number | undefined;
+    tipo?: TipoUsuario;
+    alunoId?: number | undefined;
+    professorId?: number | undefined;
 
     constructor(data?: IUsuarioCriarCommand) {
         if (data) {
@@ -4435,9 +5473,9 @@ export class UsuarioCriarCommand implements IUsuarioCriarCommand {
             this.senha = _data["senha"];
             this.nome = _data["nome"];
             this.email = _data["email"];
-            this.telefone = _data["telefone"];
-            this.termoAceito = _data["termoAceito"];
-            this.sellerId = _data["sellerId"];
+            this.tipo = _data["tipo"];
+            this.alunoId = _data["alunoId"];
+            this.professorId = _data["professorId"];
         }
     }
 
@@ -4454,9 +5492,9 @@ export class UsuarioCriarCommand implements IUsuarioCriarCommand {
         data["senha"] = this.senha;
         data["nome"] = this.nome;
         data["email"] = this.email;
-        data["telefone"] = this.telefone;
-        data["termoAceito"] = this.termoAceito;
-        data["sellerId"] = this.sellerId;
+        data["tipo"] = this.tipo;
+        data["alunoId"] = this.alunoId;
+        data["professorId"] = this.professorId;
         return data;
     }
 }
@@ -4466,9 +5504,9 @@ export interface IUsuarioCriarCommand {
     senha?: string | undefined;
     nome?: string | undefined;
     email?: string | undefined;
-    telefone?: string | undefined;
-    termoAceito?: boolean;
-    sellerId?: number | undefined;
+    tipo?: TipoUsuario;
+    alunoId?: number | undefined;
+    professorId?: number | undefined;
 }
 
 export class UsuarioAlterarCommand implements IUsuarioAlterarCommand {
@@ -4476,6 +5514,10 @@ export class UsuarioAlterarCommand implements IUsuarioAlterarCommand {
     login?: string | undefined;
     nome?: string | undefined;
     email?: string | undefined;
+    senha?: string | undefined;
+    tipo?: TipoUsuario;
+    alunoId?: number | undefined;
+    professorId?: number | undefined;
 
     constructor(data?: IUsuarioAlterarCommand) {
         if (data) {
@@ -4492,6 +5534,10 @@ export class UsuarioAlterarCommand implements IUsuarioAlterarCommand {
             this.login = _data["login"];
             this.nome = _data["nome"];
             this.email = _data["email"];
+            this.senha = _data["senha"];
+            this.tipo = _data["tipo"];
+            this.alunoId = _data["alunoId"];
+            this.professorId = _data["professorId"];
         }
     }
 
@@ -4508,6 +5554,10 @@ export class UsuarioAlterarCommand implements IUsuarioAlterarCommand {
         data["login"] = this.login;
         data["nome"] = this.nome;
         data["email"] = this.email;
+        data["senha"] = this.senha;
+        data["tipo"] = this.tipo;
+        data["alunoId"] = this.alunoId;
+        data["professorId"] = this.professorId;
         return data;
     }
 }
@@ -4517,6 +5567,10 @@ export interface IUsuarioAlterarCommand {
     login?: string | undefined;
     nome?: string | undefined;
     email?: string | undefined;
+    senha?: string | undefined;
+    tipo?: TipoUsuario;
+    alunoId?: number | undefined;
+    professorId?: number | undefined;
 }
 
 export interface FileResponse {

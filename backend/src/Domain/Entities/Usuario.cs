@@ -9,8 +9,6 @@ public class Usuario
     public string Nome { get; set; }
     public string Email { get; set; }
     public TipoUsuario Tipo { get; set; }
-    public string TokenRecuperacaoSenha { get; set; }
-    public DateTimeOffset? DataSolicitacaoRecuperacaoSenha { get; set; }
     public Professor Professor { get; set; }
     public Aluno Aluno { get; set; }
 }

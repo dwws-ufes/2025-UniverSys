@@ -9,6 +9,7 @@ import {
   TurmaObterDto,
   TurmasClient,
 } from 'web-api-client';
+import { AuthenticationService } from '../../../shared/services/authentication.service';
 
 @Component({
     templateUrl: './turma-listar.component.html',
@@ -33,7 +34,8 @@ export class TurmaListarComponent implements OnInit {
   constructor(
     private turmasClient: TurmasClient,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class TurmaListarComponent implements OnInit {
 
     this.filtro.disciplinaId = this.disciplinaId();
     this.filtro.professorId = this.professorId();
-    
+
     Object.keys(this.filtro).forEach(k => (this.filtro[k] = this.filtro[k] === '' ? null : this.filtro[k]));
 
     this.carregandoTurmas = true;
@@ -90,5 +92,17 @@ export class TurmaListarComponent implements OnInit {
     let sortOrder = aux?.value ?? null;
 
     this.pesquisar(pageIndex, pageSize, sortField, sortOrder);
+  }
+
+  isProfessor(): boolean {
+    return this.authService.isProfessor();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  visualizar(turma: TurmaObterDto) {
+    this.router.navigate(['turmas', 'editar', turma.id]);
   }
 }

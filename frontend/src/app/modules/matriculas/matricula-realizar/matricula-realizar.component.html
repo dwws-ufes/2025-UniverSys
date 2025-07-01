@@ -1,0 +1,137 @@
+<div class="matricula-realizar">
+  <nz-steps [nzCurrent]="currentStep" nzStatus="process">
+    <nz-step nzTitle="Selecionar Disciplina" nzDescription="Escolha a disciplina desejada"></nz-step>
+    <nz-step nzTitle="Selecionar Turma" nzDescription="Escolha a turma da disciplina"></nz-step>
+    <nz-step nzTitle="Confirmar Dados" nzDescription="Revise as informações"></nz-step>
+  </nz-steps>
+
+      <div class="steps-content mt-6">
+      <div *ngIf="currentStep === 0">
+        <h3 class="text-lg font-semibold mb-4">Selecione a disciplina do seu curso para matrícula</h3>
+
+        <div class="mb-4">
+          <nz-input-group nzPrefixIcon="search">
+            <input nz-input placeholder="Buscar disciplina por nome ou código..."
+                   [(ngModel)]="termoBuscaDisciplina"
+                   (ngModelChange)="filtrarDisciplinas()">
+          </nz-input-group>
+        </div>
+
+        <nz-spin [nzSpinning]="carregandoDisciplinas">
+          <div class="disciplinas-grid">
+            <nz-card
+              *ngFor="let disciplina of disciplinasFiltradas"
+              [nzBodyStyle]="{ padding: '16px' }"
+              [class.selected]="disciplinaSelecionada?.id === disciplina.id"
+              class="disciplina-card cursor-pointer mb-3"
+              (click)="selecionarDisciplina(disciplina)">
+              <div class="disciplina-info">
+                <h4 class="font-semibold text-base">{{ disciplina.nome }}</h4>
+                <p class="text-gray-600 mb-2">{{ disciplina.codigo }}</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500">{{ disciplina.cargaHoraria }}h</span>
+                  <nz-tag [nzColor]="'green'">{{ disciplina.cursoId }}</nz-tag>
+                </div>
+                <p class="text-xs text-gray-400 mt-2 line-clamp-2">{{ disciplina.ementa }}</p>
+              </div>
+            </nz-card>
+          </div>
+
+                     <nz-empty *ngIf="disciplinasFiltradas.length === 0 && !carregandoDisciplinas"
+                     nzNotFoundContent="Nenhuma disciplina disponível para o seu curso"></nz-empty>
+        </nz-spin>
+      </div>
+
+      <div *ngIf="currentStep === 1">
+        <h3 class="text-lg font-semibold mb-4">Selecione a turma da disciplina "{{ disciplinaSelecionada?.nome }}"</h3>
+
+        <div class="mb-4">
+          <nz-input-group nzPrefixIcon="search">
+            <input nz-input placeholder="Buscar turma por nome ou período..."
+                   [(ngModel)]="termoBuscaTurma"
+                   (ngModelChange)="filtrarTurmas()">
+          </nz-input-group>
+        </div>
+
+        <nz-spin [nzSpinning]="carregandoTurmas">
+          <div class="turmas-grid">
+            <nz-card
+              *ngFor="let turma of turmasFiltradas"
+              [nzBodyStyle]="{ padding: '16px' }"
+              [class.selected]="turmaSelecionada?.id === turma.id"
+              class="turma-card cursor-pointer mb-3"
+              (click)="selecionarTurma(turma)">
+              <div class="turma-info">
+                <h4 class="font-semibold text-base">{{ turma.nome }}</h4>
+                <p class="text-gray-600 mb-2">Professor ID: {{ turma.professorId }}</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500">{{ turma.semestreAno }}</span>
+                  <nz-tag [nzColor]="'blue'">{{ turma.semestrePeriodo }}º Período</nz-tag>
+                </div>
+              </div>
+            </nz-card>
+          </div>
+
+          <nz-empty *ngIf="turmasFiltradas.length === 0 && !carregandoTurmas"
+                    nzNotFoundContent="Nenhuma turma disponível para esta disciplina"></nz-empty>
+        </nz-spin>
+      </div>
+
+      <div *ngIf="currentStep === 2">
+      <h3 class="text-lg font-semibold mb-4">Confirme os dados da matrícula</h3>
+
+      <nz-alert nzType="info" nzMessage="Revise as informações antes de confirmar a matrícula"
+                nzDescription="Após confirmar, você estará matriculado na turma selecionada."
+                nzShowIcon class="mb-4"></nz-alert>
+
+              <nz-descriptions nzBordered [nzColumn]="1">
+          <nz-descriptions-item nzTitle="Disciplina Selecionada">
+            {{ disciplinaSelecionada?.nome }} ({{ disciplinaSelecionada?.codigo }})
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Carga Horária">
+            {{ disciplinaSelecionada?.cargaHoraria }} horas
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Turma Selecionada">
+            {{ turmaSelecionada?.nome }}
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Professor">
+            Professor ID: {{ turmaSelecionada?.professorId }}
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Semestre">
+            {{ turmaSelecionada?.semestreAno }} - {{ turmaSelecionada?.semestrePeriodo }}º Período
+          </nz-descriptions-item>
+        </nz-descriptions>
+      </div>
+    </div>
+
+  <div class="steps-action mt-6 flex justify-between">
+    <button nz-button nzType="default" (click)="voltarStep()" [disabled]="currentStep === 0">
+      <span nz-icon nzType="left"></span>
+      Voltar
+    </button>
+
+    <div>
+      <button nz-button nzType="default" (click)="cancelar()" class="mr-2">
+        Cancelar
+      </button>
+
+      <button *ngIf="currentStep < 2"
+              nz-button
+              nzType="primary"
+              (click)="proximoStep()"
+              [disabled]="!podeAvancar()">
+        Próximo
+        <span nz-icon nzType="right"></span>
+      </button>
+
+      <button *ngIf="currentStep === 2"
+              nz-button
+              nzType="primary"
+              (click)="realizarMatricula()"
+              [nzLoading]="processandoMatricula"
+              [disabled]="!podeAvancar()">
+        Confirmar Matrícula
+      </button>
+    </div>
+  </div>
+</div>

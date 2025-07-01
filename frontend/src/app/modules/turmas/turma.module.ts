@@ -41,6 +41,7 @@ import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
 import {provideNgxMask} from 'ngx-mask';
 import {NgxPermissionsDirective, NgxPermissionsModule} from 'ngx-permissions';
+import { MatriculasModule } from '../matriculas/matriculas.module';
 
 const antdModule = [
   NzButtonModule,
@@ -88,6 +89,7 @@ const antdModule = [
     MagmaGridComponent,
     ...antdModule,
     NgxPermissionsModule,
+    MatriculasModule
   ],
   exports: [TurmaListarComponent],
   declarations: [TurmaFormComponent, TurmaListarComponent],

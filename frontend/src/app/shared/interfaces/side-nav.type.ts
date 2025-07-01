@@ -1,3 +1,5 @@
+import { TipoUsuario } from "web-api-client";
+
 export interface SideNavInterface {
     path: string;
     title: string;
@@ -5,5 +7,5 @@ export interface SideNavInterface {
     iconTheme?: "" | "fab" | "far" | "fas" | "fill" | "outline" | "twotone";
     icon: string,
     submenu: SideNavInterface[];
-    permissions?: string[];
+    permissions?: TipoUsuario[];
 }

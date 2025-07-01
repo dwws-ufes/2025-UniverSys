@@ -1,0 +1,125 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <nz-page-header nzBackIcon="false" nzTitle="Boletim Acadêmico" nzSubtitle="Acompanhe seu desempenho acadêmico">
+  </nz-page-header>
+
+  <nz-spin [nzSpinning]="loading" nzTip="Carregando boletim...">
+    <div nz-row [nzGutter]="16" class="mb-6">
+      <div nz-col nzXs="24" nzSm="12" nzMd="6">
+        <nz-card nzTitle="Média Geral">
+          <nz-statistic
+            [nzValue]="calcularMediaGeral() || 0"
+            [nzValueStyle]="{ color: calcularMediaGeral() && calcularMediaGeral()! >= 7 ? '#059669' : calcularMediaGeral() && calcularMediaGeral()! >= 5 ? '#dc2626' : '#6b7280' }"
+            nzSuffix="/10">
+          </nz-statistic>
+        </nz-card>
+      </div>
+    </div>
+
+
+    <nz-card nzTitle="Disciplinas do Semestre">
+      @if (boletimItens.length === 0) {
+        <div class="text-center py-12">
+          <nz-empty
+            nzNotFoundImage="simple"
+            nzNotFoundContent="Nenhuma matrícula encontrada">
+          </nz-empty>
+        </div>
+      }
+
+      @if (boletimItens.length > 0) {
+        <div nz-row [nzGutter]="[16, 16]">
+          @for (item of boletimItens; track item.matricula.id) {
+            <div nz-col nzXs="24" nzMd="12" nzLg="8">
+              <nz-card [nzTitle]="item.matricula.disciplinaNome" class="h-full">
+                <div slot="extra">
+                  <nz-tag [nzColor]="getCorSituacao(item.situacao)">
+                    {{ item.situacao }}
+                  </nz-tag>
+                </div>
+
+                <nz-descriptions nzSize="small" [nzColumn]="1">
+                  <nz-descriptions-item nzTitle="Turma">
+                    {{ item.matricula.turmaNome }}
+                  </nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="Professor">
+                    {{ item.matricula.professorNome }}
+                  </nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="Semestre">
+                    {{ item.matricula.semestreAno }}/{{ item.matricula.semestrePeriodo }}º
+                  </nz-descriptions-item>
+                </nz-descriptions>
+
+                <nz-divider></nz-divider>
+
+                <div class="text-center my-4">
+                  <nz-statistic
+                    nzTitle="Média Final"
+                    [nzValue]="item.mediaFinal || 0"
+                    [nzValueStyle]="{
+                      color: item.mediaFinal === null ? '#6b7280' :
+                             item.mediaFinal >= 7 ? '#059669' :
+                             item.mediaFinal >= 5 ? '#f59e0b' : '#dc2626',
+                      fontSize: '24px'
+                    }"
+                    nzSuffix="/10">
+                  </nz-statistic>
+                </div>
+
+
+                @if (item.mediaFinal !== null) {
+                  <nz-progress
+                    [nzPercent]="(item.mediaFinal / 10) * 100"
+                    [nzStrokeColor]="item.mediaFinal >= 7 ? '#10b981' : item.mediaFinal >= 5 ? '#f59e0b' : '#ef4444'"
+                    [nzShowInfo]="false"
+                    nzSize="small"
+                    class="mt-2">
+                  </nz-progress>
+                }
+
+                <nz-collapse nzGhost class="mt-4">
+                  <nz-collapse-panel
+                    nzHeader="Ver Avaliações"
+                    [nzActive]="false"
+                    [nzDisabled]="item.avaliacoes.length === 0">
+
+                    @if (item.avaliacoes.length > 0) {
+                      <nz-list nzSize="small">
+                        @for (avaliacao of item.avaliacoes; track avaliacao.id) {
+                          <nz-list-item>
+                            <nz-list-item-meta>
+                              <nz-list-item-meta-title>
+                                {{ avaliacao.nome }}
+                                <nz-tag nzColor="blue" class="ml-2">Peso: {{ avaliacao.peso }}</nz-tag>
+                              </nz-list-item-meta-title>
+                              <nz-list-item-meta-description>
+                                @if (temNota(avaliacao.id, item.notas)) {
+                                  <nz-tag
+                                    [nzColor]="(obterNota(avaliacao.id, item.notas)?.valor || 0) >= 7 ? 'green' : (obterNota(avaliacao.id, item.notas)?.valor || 0) >= 5 ? 'orange' : 'red'">
+                                    Nota: {{ obterNota(avaliacao.id, item.notas)?.valor }}/10
+                                  </nz-tag>
+                                } @else {
+                                  <nz-tag nzColor="default">Aguardando nota</nz-tag>
+                                }
+                              </nz-list-item-meta-description>
+                            </nz-list-item-meta>
+                          </nz-list-item>
+                        }
+                      </nz-list>
+                    }
+
+                    @if (item.avaliacoes.length === 0) {
+                      <nz-empty
+                        nzNotFoundImage="simple"
+                        nzNotFoundContent="Nenhuma avaliação cadastrada">
+                      </nz-empty>
+                    }
+                  </nz-collapse-panel>
+                </nz-collapse>
+              </nz-card>
+            </div>
+          }
+        </div>
+      }
+    </nz-card>
+  </nz-spin>
+</div>

@@ -22,6 +22,7 @@ import {
   AvaliacaoSalvarCommand,
   AvaliacaoObterPorIdDto,
 } from 'web-api-client';
+import { AuthenticationService } from '../../../shared/services/authentication.service';
 
 @Component({
     templateUrl: './turma-form.component.html',
@@ -72,11 +73,13 @@ export class TurmaFormComponent implements OnInit {
     private turmasClient: TurmasClient,
     private disciplinasClient: DisciplinasClient,
     private professoresClient: ProfessoresClient,
-    private avaliacoesClient: AvaliacoesClient
+    private avaliacoesClient: AvaliacoesClient,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
     this.turmaId = this.route.snapshot.paramMap.get('id');
+
     this.carregarDisciplinas();
     this.carregarProfessores();
 
@@ -84,6 +87,22 @@ export class TurmaFormComponent implements OnInit {
       this.carregarTurma();
       this.carregarAvaliacoes();
     }
+
+    if (this.isProfessor()) {
+      this.form.disable();
+    }
+  }
+
+  isProfessor(): boolean {
+    return this.authService.isProfessor();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  podeEditar(): boolean {
+    return this.isAdmin();
   }
 
   carregarDisciplinas() {

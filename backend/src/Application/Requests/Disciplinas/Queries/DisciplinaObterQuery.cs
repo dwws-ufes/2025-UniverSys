@@ -11,6 +11,7 @@ public class DisciplinaObterQuery : QueryRequestBase, IRequest<PaginatedList<Dis
     public string Codigo { get; set; }
     public int? CargaHoraria { get; set; }
     public int? CursoId { get; set; }
+    public int? AlunoId { get; set; }
 }
 
 public class DisciplinaObterQueryHandler : IRequestHandler<DisciplinaObterQuery, PaginatedList<DisciplinaObterDto>>
@@ -34,6 +35,11 @@ public class DisciplinaObterQueryHandler : IRequestHandler<DisciplinaObterQuery,
         if(request.CursoId.HasValue)
         {
             consulta = consulta.Where(x => x.CursoId == request.CursoId.Value);
+        }
+
+        if(request.AlunoId.HasValue)
+        {
+            consulta = consulta.Where(x => !x.Turmas.Any(t => t.Matriculas.Any(m => m.AlunoId == request.AlunoId.Value)));
         }
 
         var dto = consulta.ProjectTo<DisciplinaObterDto>(_mapper.ConfigurationProvider);

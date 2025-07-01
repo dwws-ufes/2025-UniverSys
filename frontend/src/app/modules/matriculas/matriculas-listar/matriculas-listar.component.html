@@ -1,0 +1,231 @@
+@if (!isTabelaRelacionada()) {
+  <div class="bg-white pb-6 rounded-b-lg">
+    <magma-shared-title>
+      <button type="button" nz-button nzType="primary" (click)="abrirModalRealizarMatricula()">
+        <span nz-icon nzType="plus"></span>
+        Realizar Matrícula
+      </button>
+    </magma-shared-title>
+  </div>
+}
+
+<section class="mt-2">
+  <div class="mx-auto px-4 bg-white flex-col divide-y divide-gray-200 items-center rounded-lg">
+    <nz-table
+      [nzData]="matriculas.items"
+      [nzLoading]="carregandoMatriculas"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      [nzTotal]="matriculas.totalCount"
+      (nzQueryParams)="onQueryParamsChange($event)">
+      <thead>
+        <tr>
+          <th>Turma</th>
+          <th>Disciplina</th>
+          <th>Professor</th>
+          <th>Semestre</th>
+          <th>Período</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let matricula of matriculas.items">
+          <td>{{ matricula.turmaNome }}</td>
+          <td>{{ matricula.disciplinaNome }}</td>
+          <td>{{ matricula.professorNome }}</td>
+          <td>{{ matricula.semestreAno }}</td>
+          <td>{{ matricula.semestrePeriodo }}º Semestre</td>
+          <td>
+            @if (isAluno()) {
+              <button
+                nz-button
+                nzType="default"
+                nzDanger
+                nzSize="small"
+                nzShape="circle"
+                nz-popconfirm
+                nzPopconfirmTitle="Tem certeza que deseja cancelar esta matrícula?"
+                (nzOnConfirm)="cancelarMatricula(matricula)">
+                <span nz-icon nzType="close"></span>
+              </button>
+              <button
+                nz-button
+                nzType="default"
+                nzSize="small"
+                nzShape="circle"
+                class="ml-2 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                nz-tooltip
+                nzTooltipTitle="Ver Notas"
+                (click)="abrirModalNotas(matricula)">
+                <span nz-icon nzType="eye"></span>
+              </button>
+            }
+            @if (isProfessor()) {
+              <button
+                nz-button
+                nzType="primary"
+                nzSize="small"
+                nzShape="circle"
+                class="ml-2 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                nz-tooltip
+                nzTooltipTitle="Lançar Notas"
+                (click)="abrirModalNotas(matricula)">
+                <span nz-icon nzType="edit"></span>
+              </button>
+            }
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</section>
+
+<nz-modal
+  [(nzVisible)]="modalRealizarMatriculaVisivel"
+  nzTitle="Realizar Matrícula"
+  [nzFooter]="null"
+  nzWidth="800px"
+  (nzOnCancel)="fecharModal()">
+  <ng-container *nzModalContent>
+    <app-matricula-realizar
+      (matriculaRealizada)="onMatriculaRealizada()"
+      (fecharModal)="fecharModal()"></app-matricula-realizar>
+  </ng-container>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="modalNotasVisivel"
+  [nzTitle]="(isProfessor() ? 'Lançar Notas - ' : 'Ver Notas - ') + (matriculaSelecionada?.alunoNome || '')"
+  [nzFooter]="null"
+  nzWidth="900px"
+  [nzBodyStyle]="{padding: '24px'}"
+  (nzOnCancel)="fecharModalNotas()">
+  <ng-container *nzModalContent>
+    @if (matriculaSelecionada) {
+      <nz-card nzSize="small" class="mb-4">
+        <nz-descriptions [nzColumn]="2" nzSize="small">
+          <nz-descriptions-item nzTitle="Aluno">{{ matriculaSelecionada.alunoNome }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Matrícula">{{ matriculaSelecionada.alunoMatricula }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Disciplina">{{ matriculaSelecionada.disciplinaNome }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Turma">{{ matriculaSelecionada.turmaNome }}</nz-descriptions-item>
+        </nz-descriptions>
+      </nz-card>
+
+      @if (carregandoAvaliacoes || carregandoNotas) {
+        <div class="text-center py-4">
+          <nz-spin nzSize="small"></nz-spin>
+        </div>
+      } @else {
+        @if (avaliacoes.length === 0) {
+          <nz-card>
+            <nz-empty nzNotFoundContent="Nenhuma avaliação cadastrada para esta turma"></nz-empty>
+          </nz-card>
+        } @else {
+          <form nz-form [formGroup]="notasForm" (ngSubmit)="salvarNotas()">
+            <nz-space nzDirection="vertical" nzSize="middle" class="w-full">
+              @for (avaliacao of avaliacoes; track avaliacao.id) {
+                <nz-card nzSize="small">
+                  <nz-form-item>
+                    <nz-form-control [nzErrorTip]="errorTpl">
+                      <div nz-row nzGutter="16" nzAlign="middle">
+                        <div nz-col nzSpan="18">
+                          <div class="flex items-center gap-3">
+                            <span class="font-medium">{{ avaliacao.nome }}</span>
+                            <nz-input-number
+                              [formControlName]="'avaliacao_' + avaliacao.id"
+                              [nzMin]="0"
+                              [nzMax]="10"
+                              [nzStep]="0.1"
+                              [nzPrecision]="1"
+                              nzPlaceHolder="Nota (0-10)"
+                              [nzDisabled]="!isProfessor()"
+                              style="width: 120px"></nz-input-number>
+                          </div>
+                        </div>
+                        <div nz-col nzSpan="6">
+                          <nz-tag nzColor="blue">Peso: {{ avaliacao.peso || 1 }}</nz-tag>
+                        </div>
+                      </div>
+
+                      <ng-template #errorTpl let-control>
+                        @if (control.hasError('min')) {
+                          <span>A nota deve ser maior ou igual a 0</span>
+                        }
+                        @if (control.hasError('max')) {
+                          <span>A nota deve ser menor ou igual a 10</span>
+                        }
+                      </ng-template>
+                    </nz-form-control>
+                  </nz-form-item>
+                </nz-card>
+              }
+            </nz-space>
+
+            <nz-divider></nz-divider>
+
+            <nz-card nzTitle="Resultado" nzSize="small">
+              <div nz-row nzGutter="16">
+                <div nz-col nzSpan="12">
+                  <nz-statistic
+                    [nzTitle]="obterTituloMedia()"
+                    [nzValue]="calcularMediaFinal()"
+                    [nzPrecision]="2"
+                    [nzValueStyle]="{
+                      color:
+                        calcularMediaFinal() >= 7 ? '#52c41a'
+                        : calcularMediaFinal() >= 5 ? '#faad14'
+                        : '#ff4d4f',
+                    }"></nz-statistic>
+                </div>
+                <div nz-col nzSpan="12">
+                  <nz-statistic nzTitle="Status" [nzValueTemplate]="statusTemplate"></nz-statistic>
+                  <ng-template #statusTemplate>
+                    <nz-tag
+                      [nzColor]="
+                        calcularMediaFinal() >= 7 ? 'green'
+                        : calcularMediaFinal() >= 5 ? 'gold'
+                        : 'red'
+                      ">
+                      {{
+                        calcularMediaFinal() >= 7 ? 'Aprovado'
+                        : calcularMediaFinal() >= 5 ? 'Em Recuperação'
+                        : 'Reprovado'
+                      }}
+                    </nz-tag>
+                  </ng-template>
+                </div>
+              </div>
+            </nz-card>
+
+            <nz-form-item class="mt-4">
+              <nz-form-control>
+                <div class="flex justify-end gap-3">
+                  @if (isProfessor()) {
+                    <button type="button" nz-button nzType="default" (click)="fecharModalNotas()">
+                      <span nz-icon nzType="close"></span>
+                      Cancelar
+                    </button>
+                    <button
+                      type="submit"
+                      nz-button
+                      nzType="primary"
+                      [nzLoading]="salvandoNotas"
+                      [disabled]="!notasForm.valid">
+                      <span nz-icon nzType="save"></span>
+                      Salvar Notas
+                    </button>
+                  } @else {
+                    <button type="button" nz-button nzType="primary" (click)="fecharModalNotas()">
+                      <span nz-icon nzType="close"></span>
+                      Fechar
+                    </button>
+                  }
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        }
+      }
+    }
+  </ng-container>
+</nz-modal>
