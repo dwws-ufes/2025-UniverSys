@@ -1,4 +1,3 @@
-using Magma.Extensions.Application;
 using Magma.Extensions.Application.Models;
 using UniverSys.Application.Requests.Avaliacoes.Queries.Dto;
 
@@ -30,10 +29,15 @@ public class AvaliacaoObterQueryHandler : IRequestHandler<AvaliacaoObterQuery, P
     {
         var consulta = _context.Avaliacoes.AsNoTracking();
 
+        if (request.TurmaId.HasValue)
+        {
+            consulta = consulta.Where(x => x.TurmaId == request.TurmaId);
+        }
+
         var dto = consulta.ProjectTo<AvaliacaoObterDto>(_mapper.ConfigurationProvider);
 
         var registros = await PaginatedList<AvaliacaoObterDto>.CreateAsync(dto, request.PageIndex, request.PageSize);
 
         return registros;
     }
-} 
+}

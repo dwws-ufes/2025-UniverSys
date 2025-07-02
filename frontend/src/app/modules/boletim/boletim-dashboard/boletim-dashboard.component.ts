@@ -146,4 +146,8 @@ export class BoletimDashboardComponent implements OnInit {
   obterNota(avaliacaoId: number | undefined, notas: NotaObterDto[]): NotaObterDto | undefined {
     return notas.find(n => n.avaliacaoId === avaliacaoId);
   }
+
+  formatarNumero(valor: number): string {
+    return valor.toFixed(2);
+  }
 }
