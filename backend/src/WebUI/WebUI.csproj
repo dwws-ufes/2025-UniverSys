@@ -14,7 +14,6 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <UserSecretsId>e95b2f35-f873-4796-bc94-9c9f73ae98a0</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

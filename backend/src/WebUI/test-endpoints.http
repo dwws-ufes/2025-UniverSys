@@ -79,6 +79,9 @@ Content-Type: application/json
 ### Excluir Curso
 DELETE {{baseUrl}}/cursos/1
 
+### Obter Resumo do Curso
+GET {{baseUrl}}/cursos/obter-resumo?nomeCurso=Engenharia%20el%C3%A9trica
+
 ### ==================================================
 ### DISCIPLINAS
 ### ==================================================

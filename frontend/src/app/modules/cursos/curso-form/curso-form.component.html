@@ -2,8 +2,6 @@
   <magma-shared-title></magma-shared-title>
 </div>
 
-<!-- <magma-shared-subtitle [title]="cursoId ? curso?.nome ?? 'Editar' : 'Novo'"></magma-shared-subtitle> -->
-
 <section class="bg-white rounded-md mt-2">
   <nz-tabset>
     <nz-tab nzTitle="Dados Gerais">
@@ -52,3 +50,32 @@
     }
   </nz-tabset>
 </section>
+
+@if(cursoId && curso) {
+  <section class="bg-white rounded-md mt-4">
+    <div class="px-4 py-3 border-b">
+      <h3 class="text-lg font-semibold text-gray-800">Resumo</h3>
+    </div>
+    <div class="px-4 py-4">
+      @if(carregandoResumo) {
+        <div class="flex items-center justify-center py-8">
+          <nz-spin nzSize="large"></nz-spin>
+        </div>
+      } @else if(resumo?.resumo) {
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="mb-3">
+            <span class="text-sm font-medium text-gray-600">Curso:</span>
+            <span class="ml-2 text-sm text-gray-800">{{ resumo.nomeCurso }}</span>
+          </div>
+          <div class="text-gray-700 leading-relaxed">
+            {{ resumo.resumo }}
+          </div>
+        </div>
+      } @else {
+        <div class="text-center py-8 text-gray-500">
+          <nz-empty nzNotFoundImage="simple" nzNotFoundContent="Nenhum resumo disponível para este curso"></nz-empty>
+        </div>
+      }
+    </div>
+  </section>
+}

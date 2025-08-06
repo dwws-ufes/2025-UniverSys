@@ -23,6 +23,7 @@ namespace UniverSys.Infrastructure
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             services.AddTransient<IDateTime, DateTimeService>();
+            services.AddHttpClient<ILinkedDataService, LinkedDataService>();
 
             services.AddAuthentication(opt =>
             {

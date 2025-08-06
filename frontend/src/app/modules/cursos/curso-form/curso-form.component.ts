@@ -8,6 +8,7 @@ import {
   CursoSalvarCommand,
   CursosClient,
   CursoObterPorIdDto,
+  CursoObterResumoDto,
 } from 'web-api-client';
 
 @Component({
@@ -29,6 +30,9 @@ export class CursoFormComponent implements OnInit {
   curso: CursoObterPorIdDto;
   carregandoCurso: boolean;
 
+  resumo: CursoObterResumoDto;
+  carregandoResumo: boolean = false;
+
   constructor(
     public router: Router,
     private route: ActivatedRoute,
@@ -44,9 +48,30 @@ export class CursoFormComponent implements OnInit {
   }
 
   carregarCurso() {
+    this.carregandoCurso = true;
     this.cursosClient.obterPorId(+this.cursoId).subscribe(res => {
       this.form.patchValue(res);
       this.curso = res;
+      this.carregandoCurso = false;
+
+      if (res.nome) {
+        this.carregarResumo(res.nome);
+      }
+    });
+  }
+
+  carregarResumo(nomeCurso: string) {
+    if (!nomeCurso) return;
+
+    this.carregandoResumo = true;
+    this.cursosClient.obterResumo(nomeCurso).subscribe({
+      next: (resumo) => {
+        this.resumo = resumo;
+        this.carregandoResumo = false;
+      }
+    })
+    .add(() => {
+      this.carregandoResumo = false;
     });
   }
 

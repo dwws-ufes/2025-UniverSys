@@ -460,6 +460,37 @@
         }
       }
     },
+    "/api/Cursos/obter-resumo": {
+      "get": {
+        "tags": [
+          "Cursos"
+        ],
+        "operationId": "Cursos_ObterResumo",
+        "parameters": [
+          {
+            "name": "nomeCurso",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CursoObterResumoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Departamentos": {
       "post": {
         "tags": [
@@ -1941,6 +1972,20 @@
             }
           }
         ]
+      },
+      "CursoObterResumoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nomeCurso": {
+            "type": "string",
+            "nullable": true
+          },
+          "resumo": {
+            "type": "string",
+            "nullable": true
+          }
+        }
       },
       "DepartamentoSalvarCommand": {
         "type": "object",

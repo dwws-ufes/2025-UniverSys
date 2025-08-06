@@ -39,4 +39,13 @@ public class CursosController : ApiControllerBase
         
         return Ok();
     }
+
+    [HttpGet("obter-resumo")]
+    public async Task<CursoObterResumoDto> ObterResumo([FromQuery] string nomeCurso)
+    {
+        return await Mediator.Send(new CursoObterResumoQuery
+        {
+            NomeCurso = nomeCurso
+        });
+    }
 } 

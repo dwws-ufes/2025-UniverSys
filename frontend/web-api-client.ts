@@ -608,6 +608,7 @@ export interface ICursosClient {
     obterPorId(id: number): Observable<CursoObterPorIdDto>;
     obter(query: CursoObterQuery): Observable<PaginatedListOfCursoObterDto>;
     excluir(id: number): Observable<FileResponse>;
+    obterResumo(nomeCurso: string | null | undefined): Observable<CursoObterResumoDto>;
 }
 
 @Injectable({
@@ -826,6 +827,56 @@ export class CursosClient implements ICursosClient {
                 fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             }
             return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obterResumo(nomeCurso: string | null | undefined): Observable<CursoObterResumoDto> {
+        let url_ = this.baseUrl + "/api/Cursos/obter-resumo?";
+        if (nomeCurso !== undefined && nomeCurso !== null)
+            url_ += "nomeCurso=" + encodeURIComponent("" + nomeCurso) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObterResumo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObterResumo(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CursoObterResumoDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CursoObterResumoDto>;
+        }));
+    }
+
+    protected processObterResumo(response: HttpResponseBase): Observable<CursoObterResumoDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CursoObterResumoDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -3592,6 +3643,46 @@ export interface ICursoObterQuery extends IQueryRequestBase {
     id?: number | undefined;
     nome?: string | undefined;
     duracaoSemestres?: number | undefined;
+}
+
+export class CursoObterResumoDto implements ICursoObterResumoDto {
+    nomeCurso?: string | undefined;
+    resumo?: string | undefined;
+
+    constructor(data?: ICursoObterResumoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.nomeCurso = _data["nomeCurso"];
+            this.resumo = _data["resumo"];
+        }
+    }
+
+    static fromJS(data: any): CursoObterResumoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CursoObterResumoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["nomeCurso"] = this.nomeCurso;
+        data["resumo"] = this.resumo;
+        return data;
+    }
+}
+
+export interface ICursoObterResumoDto {
+    nomeCurso?: string | undefined;
+    resumo?: string | undefined;
 }
 
 export class DepartamentoSalvarCommand implements IDepartamentoSalvarCommand {
