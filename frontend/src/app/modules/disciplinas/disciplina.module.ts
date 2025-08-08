@@ -1,6 +1,7 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {DisciplinaFormComponent} from './disciplina-form/disciplina-form.component';
 import {DisciplinaListarComponent} from './disciplina-listar/disciplina-listar.component';
+import { DisciplinaRdfComponent } from './disciplina-rdf/disciplina-rdf.component';
 import {DisciplinaRoutingModule} from './disciplina-routing.module';
 
 /** Import any ng-zorro components as the module required except icon module */
@@ -93,7 +94,7 @@ const antdModule = [
     TurmaModule
   ],
   exports: [DisciplinaListarComponent],
-  declarations: [DisciplinaFormComponent, DisciplinaListarComponent],
+  declarations: [DisciplinaFormComponent, DisciplinaListarComponent, DisciplinaRdfComponent],
   providers: [provideNgxMask(), NgxPermissionsDirective],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

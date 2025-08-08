@@ -751,6 +751,27 @@
         }
       }
     },
+    "/api/Disciplinas/rdf": {
+      "get": {
+        "tags": [
+          "Disciplinas"
+        ],
+        "operationId": "Disciplinas_ObterTodasRdfXml",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Matriculas": {
       "post": {
         "tags": [

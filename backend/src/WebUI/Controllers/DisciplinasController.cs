@@ -39,4 +39,11 @@ public class DisciplinasController : ApiControllerBase
         
         return Ok();
     }
+
+    [HttpGet("rdf")]
+    public async Task<IActionResult> ObterTodasRdfXml()
+    {
+        var file = await Mediator.Send(new DisciplinaObterTodasRdfXmlQuery());
+        return File(file.Content, file.ContentType, file.FileName);
+    }
 } 

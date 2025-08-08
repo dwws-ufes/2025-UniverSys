@@ -1,0 +1,9 @@
+<div class="bg-white p-3 rounded-lg mb-3 font-semibold">RDF de Disciplinas</div>
+
+<nz-spin [nzSpinning]="loading">
+  <ng-container *ngIf="!loading">
+    <pre *ngIf="contentText" class="w-full bg-white p-3 rounded mb-3" style="white-space: pre-wrap">{{ contentText }}</pre>
+  </ng-container>
+</nz-spin>
+
+

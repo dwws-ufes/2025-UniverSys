@@ -8,6 +8,12 @@
 
 <section class="mt-2">
   <div class="mx-auto px-4 bg-white flex-col divide-y divide-gray-200 items-center rounded-lg">
+    <div class="flex justify-end py-3">
+      <button nz-button nzType="default" [routerLink]="['/disciplinas','rdf']">
+        <span nz-icon nzType="file" class="mr-1"></span>
+        Ver RDF
+      </button>
+    </div>
     <nz-table [nzData]="disciplinas.items" [nzLoading]="carregandoDisciplinas" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
               [nzTotal]="disciplinas.totalCount" (nzQueryParams)="onQueryParamsChange($event)">
       <thead>
