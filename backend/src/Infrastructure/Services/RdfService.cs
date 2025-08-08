@@ -1,6 +1,4 @@
-using System.Text;
 using System.IO;
-using UniverSys.Application.Common.Interfaces;
 using UniverSys.Application.Requests.Disciplinas.Queries.Dto;
 using VDS.RDF;
 using VDS.RDF.Writing;
@@ -25,7 +23,7 @@ public class RdfService : IRdfService
 
         foreach (var dto in disciplinas)
         {
-            var subjectUri = new Uri($"{baseUri.TrimEnd('/')}/disciplina/{Uri.EscapeDataString(dto.Codigo)}");
+            var subjectUri = new Uri($"{baseUri.TrimEnd('/')}/disciplinas/rdf/{Uri.EscapeDataString(dto.Codigo)}");
             var subject = graph.CreateUriNode(subjectUri);
 
             graph.Assert(subject, rdfType, schemaCourse);
